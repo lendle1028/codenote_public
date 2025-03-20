@@ -1,0 +1,72 @@
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Phaser 遊戲程式教學</title>
+
+
+
+<h1>Phaser 遊戲程式教學 - Cursor 與 Animation</h1>
+
+<p>在 Phaser 遊戲開發中，使用 Cursor 控制角色移動是非常常見的操作，同時在遊戲中加入動畫效果也能提升遊戲的趣味性。</p>
+
+<h2>Cursor 控制角色移動</h2>
+<p>在 Phaser 中，可以使用 Cursor 鍵來控制角色的移動。首先，我們要在 preload 函數中載入我們的角色圖片：</p>
+
+<pre>this.load.spritesheet("dude", "path/to/dude.png", { frameWidth: width, frameHeight: height });
+</pre>
+
+<p>接著，在 create 函數中放置我們的角色：</p>
+
+<pre>this.player = this.physics.add.sprite(x, y, "dude");
+</pre>
+
+<p>最後，在 update 函數中設置 Cursor 鍵的事件，來移動角色：</p>
+
+<pre>update() {
+    if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-speed);
+    } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(speed);
+    } else {
+        this.player.setVelocityX(0);
+    }
+}
+</pre>
+
+<h2>加入角色動畫</h2>
+<p>要為角色添加動畫效果，首先我們需要在 preload 函數中載入角色的 spritesheet</p>
+
+<pre>this.load.spritesheet("dude", "path/to/dude.png", { frameWidth: width, frameHeight: height });
+</pre>
+
+<p>然後在 create 函數中創建角色的動畫：</p>
+
+<pre>this.anims.create({
+    key: "left",
+    frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1
+});
+</pre>
+
+<p>最後，在 update 函數中根據角色的移動來播放對應的動畫：</p>
+
+<pre>update() {
+    if (this.player.body.velocity.x &lt; 0) {
+        this.player.anims.play("left", true);
+    } else {
+        this.player.anims.play("right", true);
+    }
+}
+</pre>
+
+<h3>參考資料：</h3>
+<ul>
+    <li><a href="https://phaser.io/examples/v3/category/camera">Phaser 官方文件</a></li>
+    <li><a href="https://rexrainbow.github.io/phaser3-rex-notes/docs/site/arcade%20collider/">Phaser Arcade Collider 教學</a></li>
+</ul>
+
+

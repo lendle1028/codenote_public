@@ -1,0 +1,65 @@
+
+
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser 遊戲程式教學</title>
+
+
+
+    <h1>Phaser 遊戲程式教學</h1>
+    <p>如果你想學習如何使用 Phaser 框架來開發遊戲，本教學將引導你進入 Phaser 的世界，做一個簡單的遊戲。</p>
+
+    <h2>重要的概念</h2>
+    <p>在 Phaser 中，有幾個重要的概念需要理解：</p>
+    <ul>
+        <li><strong>Scene（場景）：</strong>代表遊戲中的一個場景，包含遊戲中的元素和動作。</li>
+        <li><strong>Sprite（精靈）：</strong>在遊戲中可以移動的圖像，如角色、子彈等。</li>
+        <li><strong>Group（羣組）：</strong>用來包裝多個精靈，方便管理與處理碰撞事件。</li>
+        <li><strong>Physics（物理引擎）：</strong>處理對象之間的碰撞和運動。</li>
+        <li><strong>Animation（動畫）：</strong>讓精靈有生動的表現，如移動、攻擊等。</li>
+    </ul>
+
+    <h2>程式碼範例</h2>
+    <p>以下是一個簡單的遊戲程式碼範例：</p>
+
+    <pre>        <code>
+            // 在 create() 方法中建立場景
+            create() {
+                // 加載遊戲資源
+                this.load.image("rocket", "rocket.png");
+
+                // 創建精靈
+                this.rocket = this.physics.add.sprite(400, 300, "rocket");
+
+                // 設定物理效果
+                this.rocket.setCollideWorldBounds(true);
+
+                // 創建羣組
+                this.bullets = this.physics.add.group();
+                this.enemies = this.physics.add.group();
+
+                // 設定碰撞事件處理
+                this.physics.add.overlap(this.bullets, this.enemies, this.bulletHitEnemy, null, this);
+            }
+
+            // 在 update() 方法中更新遊戲狀態
+            update() {
+                // 檢查按鍵輸入
+                if (this.input.keyboard.checkDown(this.cursors.space, 500)) {
+                    this.fireBullet();
+                }
+            }
+        </code>
+    </pre>
+
+    <h2>參考資料</h2>
+    <ul>
+        <li><a href="https://phaser.io/">Phaser 官方網站</a></li>
+        <li><a href="https://phaser.io/examples">Phaser 範例</a></li>
+        <li><a href="https://github.com/photonstorm/phaser3-project-template">Phaser 專案範本</a></li>
+    </ul>
+
+

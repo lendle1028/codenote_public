@@ -1,0 +1,83 @@
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Phaser 遊戲程式教學</title>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+
+
+
+<h1>Phaser 遊戲程式教學</h1>
+
+<p>歡迎來到 Phaser 遊戲程式的教學！在本教學中，我們將使用 Phaser 遊戲框架來開發一個簡單的遊戲。</p>
+
+<p>首先，在 index.html 中，我們需要引入 Phaser 框架的庫文件：</p>
+<pre>&lt;script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"&gt;&lt;/script&gt;</pre>
+
+<p>接下來，我們需要建立一個基本的遊戲場景，可以在一個獨立的 JavaScript 文件中實現，比如 Scene.js：</p>
+<pre>&lt;script src="./Scene.js"&gt;&lt;/script&gt;</pre>
+
+<p>然後，我們還需要建立一個玩家物件，也可以在一個獨立的 JavaScript 文件中實現，比如 Player.js：</p>
+<pre>&lt;script src="./Player.js"&gt;&lt;/script&gt;</pre>
+
+<p>在 index.html 文件中，我們可以創建一個 Phaser 遊戲實例：</p>
+<pre>var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: [Scene]
+};
+
+var game = new Phaser.Game(config);
+</pre>
+
+<p>在這個配置中，我們指定了遊戲的類型，寬度和高度，以及遊戲的物理引擎設置。我們還指定了場景 Scene.js 為遊戲的初始場景。</p>
+
+<p>在 Scene.js 中，我們可以通過以下方式將玩家物件添加到場景中：</p>
+<pre>class Scene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'scene' });
+    }
+
+    create() {
+        this.player = new Player(this, 100, 450);
+        this.add.existing(this.player);
+    }
+
+    update() {
+        // 在遊戲循環中更新遊戲狀態
+    }
+}
+</pre>
+
+<p>在 Player.js 中，我們可以定義玩家物件的行為和外觀：</p>
+<pre>class Player extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'player');
+
+        scene.physics.world.enable(this);
+        scene.add.existing(this);
+
+        this.scene = scene;
+    }
+
+    update() {
+        // 更新玩家行為
+    }
+}
+</pre>
+
+<p>透過以上步驟，我們可以創建一個基本的 Phaser 遊戲，並在遊戲場景中添加玩家物件。</p>
+
+<p>如果您對 Phaser 遊戲程式開發有興趣，可以參考更多的官方文檔和教學資源：<a href="https://phaser.io/tutorials/making-your-first-phaser-3-game">Phaser 官方教學</a></p>
+
+

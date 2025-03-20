@@ -1,0 +1,10 @@
+Scene life-cycle
+In order for us to add the first images to our game, we’ll need to develop a basic understanding of the Scene life-cycle:
+
+Phaser 3 game lifecycle illustration
+
+When a scene starts, the init method is called. This is where you can setup parameters for your scene or game.
+What comes next is the preloading phaser (preload method). As explained previously, Phaser loads images and assets into memory before launching the actual game. A great feature of this framework is that if you load the same scene twice, the assets will be loaded from a cache, so it will be faster.
+Upon completion of the preloading phase, the create method is executed. This one-time execution gives you a good place to create the main entities for your game (player, enemies, etc).
+While the scene is running (not paused), the update method is executed multiple times per second (the game will aim for 60. On less-performing hardware like low-range Android, it might be less). This is an important place for us to use as well.
+There are more methods in the scene life-cycle (render, shutdown, destroy), but we won’t be using them in this tutorial.

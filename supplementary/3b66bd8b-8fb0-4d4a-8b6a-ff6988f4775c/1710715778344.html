@@ -1,0 +1,81 @@
+
+
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phaser 遊戲程式教學</title>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+<script src="./Scene.js"></script>
+<script src="./Player.js"></script>
+
+
+<h1>Phaser 遊戲程式教學</h1>
+
+<div id="gameContainer"></div>
+
+<script>
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: {
+        create: create,
+        update: update
+    }
+};
+
+var game = new Phaser.Game(config);
+
+function create() {
+    this.add.image(400, 300, 'sky');
+
+    this.platforms = this.physics.add.staticGroup();
+    this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
+    this.player = new Player(this);
+
+    this.physics.add.collider(this.player, this.platforms);
+}
+
+function update() {
+    if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-160);
+    } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(160);
+    } else {
+        this.player.setVelocityX(0);
+    }
+    
+    if (this.cursors.up.isDown && this.player.body.touching.down) {
+        this.player.setVelocityY(-345);
+    }
+}
+
+</script>
+
+
+```
+
+在這段程式碼中，我們使用了 Phaser 遊戲引擎建立了一個簡單的遊戲場景。首先，我們載入了 Phaser 遊戲引擎，並引入了遊戲場景（Scene.js）和角色（Player.js）的腳本。
+
+在遊戲建立的階段（create 函式），我們創建了背景圖片和地板平臺，然後創建了一個角色（Player），並設置了角色和平臺之間的碰撞檢測。
+
+在遊戲更新的階段（update 函式），我們根據鍵盤的操作來控制角色的移動，當按下左鍵時，角色向左移動，按下右鍵時，角色向右移動，並且當按下上鍵時，角色跳躍。
+
+更新函式是遊戲中非常重要的一部分，它能夠實現遊戲物件的即時更新和互動，讓遊戲更加生動和流暢。在這個例子中，我們根據鍵盤的輸入來更新角色的速度，讓玩家可以控制角色的移動。
+
+如果想要深入了解 Phaser 遊戲程式開發，可以通過學習更多的 Phaser API 和遊戲開發技巧來擴展自己的知識。以下是一些參考資料，可以幫助你更深入地學習 Phaser 遊戲程式開發：
+- [Phaser 官方文檔](https://phaser.io/docs)
+- [Phaser 教學視頻](https://www.youtube.com/playlist?list=PL2yj3Oj7sDAxgXWW3vZVI5x9dEyKv7RZb)
+- [Phaser 遊戲開發入門指南](https://blog.ourcade.co/posts/2019/make-phaser-games-m1/)
+
+希望這個簡單的教學能夠幫助你入門 Phaser 遊戲程式開發，並啟發你對遊戲開發的興趣。祝你玩得開心！

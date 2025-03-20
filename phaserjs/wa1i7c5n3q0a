@@ -1,0 +1,30 @@
+Bouncing enemies
+The up and down movement of the dragons will follow the logic described below. When making games and implementing mechanics, it is in my opinion always good to outline them and understand them well before attempting implementation:
+
+Enemies have a speed, a maximum and a minimum vale of Y they will reach (we already have all of this declared in init).
+We want to increase the position of an enemy until it reaches the maximum value
+Then, we want to reverse the movement, until the minimum value is reached
+When the minimum value is reached, go back up..
+Since we have basically an array of enemies, we’ll iterate through this array, in update, and apply this movement logic to each enemy (note: speed hasn’t been declared yet, so assume each enemy has a value setup for this property):
+
+// enemy movement
+  let enemies = this.enemies.getChildren();
+  let numEnemies = enemies.length;
+  for (let i = 0; i < numEnemies; i++) {
+    // move enemies
+    enemies[i].y += enemies[i].speed;
+    // reverse movement if reached the edges
+    if (enemies[i].y >= this.enemyMaxY && enemies[i].speed > 0) {
+      enemies[i].speed *= -1;
+    } else if (enemies[i].y <= this.enemyMinY && enemies[i].speed < 0) {
+      enemies[i].speed *= -1;
+    }
+  }
+This code will make the dragons move up and down, provided speed was set. Let’s take care of that now. In create, after scaling our dragons, let’s give each a random velocity between 1 and 2:
+
+  // set speeds
+  Phaser.Actions.Call(this.enemies.getChildren(), function(enemy) {
+    enemy.speed = Math.random() * 2 + 1;
+  }, this);
+Phaser.Actions.Call allows us to call a method on each array element. We are passing this as the context (although not using it).
+Now our up and down movement is complete!

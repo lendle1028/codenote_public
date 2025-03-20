@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <title>Hello, Codeworld!</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+        <script src="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.css" rel="stylesheet">
+        <style>
+            input {
+                outline: 0;
+                border-width: 0 0 0px;
+                border-color: lightgray
+            }
+            table{
+                vertical-align: bottom !important
+            }
+            table td{
+                padding: 0px !important
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><i class="bi bi-file-earmark-code-fill"></i>&nbsp;CODENOTE</a>
+                </div>
+            </nav>
+            <div class='container' id='app'>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">ID</span>
+                        </div>
+                        <input type="text" v-model="parameter.id" style="width: 50%"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Programming Keywords</span>
+                        </div>
+                        <table class="table">
+                                <tr v-for="(t,index) in programmingKeywords2">
+                                    <td><input type="text" v-model="t.text" style="width: 100%"/></td>
+                                    <td><button class="btn btn-danger" v-on:click="removeProgrammingKeyword(index);"><i class="bi bi-trash3" style="font-size: 12px"></i></button></td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="input-group m-1">
+                        <button class="btn btn-success" v-on:click="addProgrammingKeyword();">ADD</button>
+                        <button class="btn btn-danger" v-on:click="generate();">Generate</button>
+                    </div>
+                    <hr/>
+                    <h2>Generate Fields below Using an Existing Project</h2>
+                    <div class="input-group m-1">
+                        <select class="form-select" aria-label="Select Project Name" v-model="selectedProject">
+                            <option v-for="n in projectNames" v-bind:value="n">{{n}}</option>
+                          </select>
+                        <button class="btn btn-danger" v-on:click="generateParameters();">Generate</button>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Question Keywords</span>
+                        </div>
+                        <table class="table">
+                                <tr v-for="(t,index) in questionKeywords2">
+                                    <td><input type="text" v-model="t.text" style="width: 100%"/></td>
+                                    <td><button class="btn btn-danger" v-on:click="removeQuestionKeyword(index);"><i class="bi bi-trash3" style="font-size: 12px"></i></button></td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="input-group m-1">
+                        <button class="btn btn-success" v-on:click="addQuestionKeyword();">ADD</button>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Average # Programming Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.averageProgrammingKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Average # Question Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.averageQuestionKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Average # Other Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.averageOtherKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Std # Programming Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.stdProgrammingKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Std # Question Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.stdQuestionKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Std # Other Keywords</span>
+                        </div>
+                        <input type="text" style="width: 50%" v-model="parameter.stdOtherKeywords"/>
+                    </div>
+                    <div class="input-group m-1">
+                        <input class="btn btn-primary" type="button" value="Save" v-on:click="save();"></input>
+                    </div>
+      
+            </div>
+            <script th:inline="javascript">
+                var id = [[${id}]];
+                var mode = [[${mode}]];
+            </script>
+            <script>
+                $.busyLoadSetup({animation: "slide", background: "rgba(127,63,191,0.54)"});
+                let app=new Vue({
+                    el: "#app",
+                    data: {
+                        parameter:{
+                            id:"",
+                            programmingKeywords:[],
+                            questionKeywords:[],
+                            averageProgrammingKeywords:0,
+                            averageQuestionKeywords: 0,
+                            averageOtherKeywords: 0,
+                            stdProgrammingKeywords:0,
+                            stdQuestionKeywords: 0,
+                            stdOtherKeywords: 0
+                        },
+                        programmingKeywords2:[],
+                        questionKeywords2:[],
+                        selectedProject: "Phaser Game",
+                        projectNames: []
+                    },
+                    methods:{
+                        removeTopic: function(index){
+                            app.tutor.topics2.splice(index, 1);
+                        },
+                        save: function(){
+                            app.parameter.programmingKeywords=[];
+                            app.parameter.questionKeywords=[];
+                            for(let k of app.programmingKeywords2){
+                                app.parameter.programmingKeywords.push(k.text);
+                            }
+                            for(let k of app.questionKeywords2){
+                                app.parameter.questionKeywords.push(k.text);
+                            }
+                            $.busyLoadFull("show", {text: "LOADING ...", textColor: "white", color: "#DCB5FF", textPosition: "bottom"});
+                            $.ajax("/api/personalityPrediction/conf", {
+                                type: "PUT",
+                                contentType: "application/json;charset=utf-8",
+                                data: JSON.stringify(app.parameter),
+                                success: function(d){
+                                 $.busyLoadFull("hide");
+                                },
+                                error: function(){
+                                    $.busyLoadFull("hide");
+                                }
+                            });
+                        },
+                        addProgrammingKeyword: function(){
+                            app.programmingKeywords2.push({text:""});
+                        },
+                        addQuestionKeyword: function(){
+                            app.questionKeywords2.push({text:""});
+                        },
+                        removeProgrammingKeyword: function(index){
+                            app.programmingKeywords2.splice(index, 1);
+                        },
+                        removeQuestionKeyword: function(index){
+                            app.questionKeywords2.splice(index, 1);
+                        },
+                        generate: function(){
+                            $.busyLoadFull("show", {text: "LOADING ...", textColor: "white", color: "#DCB5FF", textPosition: "bottom"});
+                            app.programmingKeywords2=[];
+                            $.ajax("/api/personalityPrediction/conf/generateProgrammingKeys",{
+                                success: function(d){
+                                    $.busyLoadFull("hide");
+                                    for(let t of d){
+                                        app.programmingKeywords2.push({
+                                            text: t
+                                        });
+                                    }
+                                },
+                                error:function(){
+                                    $.busyLoadFull("hide");
+                                }
+                            });
+                        },
+                        generateParameters: function(){
+                            $.busyLoadFull("show", {text: "LOADING ...", textColor: "white", color: "#DCB5FF", textPosition: "bottom"});
+                            let pk=[];
+                            for(let k of app.programmingKeywords2){
+                                pk.push(k.text);
+                            }
+                            $.ajax("/api/personalityPrediction/conf/recommendedParameters/projectName/"+app.selectedProject,{
+                                type: "POST",
+                                contentType: "application/json;charset=utf-8",
+                                data: JSON.stringify(pk),
+                                success: function(d){
+                                    $.busyLoadFull("hide");
+                                    app.questionKeywords2=[];
+                                    for(let k of d.questionKeywords){
+                                        app.questionKeywords2.push({'text':k});
+                                    }
+                                    app.parameter.averageProgrammingKeywords=d.averageProgrammingKeywords;
+                                    app.parameter.averageQuestionKeywords=d.averageQuestionKeywords;
+                                    app.parameter.averageOtherKeywords=d.averageOtherKeywords;
+                                    app.parameter.stdProgrammingKeywords=d.stdProgrammingKeywords;
+                                    app.parameter.stdQuestionKeywords=d.stdQuestionKeywords;
+                                    app.parameter.stdOtherKeywords=d.stdOtherKeywords;
+                                },
+                                error:function(){
+                                    $.busyLoadFull("hide");
+                                }
+                            });
+                        }
+                    }
+                });
+                
+                if(mode=="edit"){
+                    $.ajax("/api/personalityPrediction/conf/id/"+id, {
+                        success: function(d){
+                            app.parameter=d;
+                            for(let k of d.programmingKeywords){
+                                app.programmingKeywords2.push({'text':k});
+                            }
+                            for(let k of d.questionKeywords){
+                                app.questionKeywords2.push({'text':k});
+                            }
+                        }
+                    });
+                }else{
+                    
+                }
+                $.ajax("/api/sampleProjectBean", {
+                        success: function(d){
+                            for(let p of d){
+                                app.projectNames.push(p.projectname_ex);
+                            }
+                            app.selectedProject=d[0].projectname_ex;
+                        }
+                    });
+            </script>
+        </div>
+    </body>
+</html>

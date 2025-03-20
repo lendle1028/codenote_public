@@ -1,0 +1,81 @@
+**Phaser 遊戲程式入門**
+
+### Intro
+
+Phaser 是一個免費、開源的 JavaScript 遊戲框架，提供了強大的功能來建立各種類型的遊戲。以下將是 Phaser 的基本概念介紹，包括 Load Manager、Physics、Particles 等。
+
+### Load Manager
+
+Load Manager 是負責管理遊戲資源（如圖片、音效等）的部份。以下程式碼示範了如何使用 Load Manager 加載圖片：
+
+```javascript
+const logo = this.physics.add.image(400, 300, 'logo');
+this.load.setBaseURL('https://labs.phaser.io/demos');
+this.load.image('logo', 'src/assets/sprites/phaser3-logo.png');
+this.load.image('red', 'src/assets/particles/red.png');
+```
+
+在上述程式碼中，`this.load.setBaseURL('https://labs.phaser.io/demos');` 是設定 Load Manager 的基礎 URL，而 `this.load.image('logo', 'src/assets/sprites/phaser3-logo.png');` 是加載圖片 'logo' 的程式碼。
+
+### Physics
+
+Physics 是遊戲物理引擎，負責管理遊戲物件的物理行為。以下程式碼示範了如何使用 Physics 使圖片具備碰撞功能：
+
+```javascript
+const logo = this.physics.add.image(400, 300, 'logo');
+logo.setCollideWorldBounds(true);
+logo.setBounce(1, 1);
+```
+
+在上述程式碼中，`logo.setCollideWorldBounds(true);` 是使圖片具備碰撞世界邊界的功能，而 `logo.setBounce(1, 1);` 是使圖片在碰撞時具備彈性效果。
+
+### Particles
+
+Particles 是負責管理遊戲中的粒子效果的部份。以下程式碼示範了如何使用 Particles 生成粒子效果：
+
+```javascript
+const particles = this.add.particles('red');
+particles.startFollow(logo);
+```
+
+在上述程式碼中，`this.add.particles('red');` 是生成粒子效果，而 `particles.startFollow(logo);` 是使粒子效果跟隨圖片 logo。
+
+### 遊戲程式結構
+
+以下是 Phaser 遊戲程式的基本結構：
+
+```javascript
+class Example extends Phaser.Scene {
+  constructor() {
+    super();
+  }
+
+  preload() {
+    // 加載資源
+  }
+
+  create() {
+    // 建立遊戲元素
+  }
+
+  update() {
+    // 更新遊戲狀態
+  }
+}
+```
+
+在上述程式碼中，`preload()` 是負責加載資源的函數，而 `create()` 是負責建立遊戲元素的函數，`update()` 是負責更新遊戲狀態的函數。
+
+### 參考資料
+
+* Phaser 官方文件：https://photonstorm.github.io/phaser3/
+* Phaser Labs：https://labs.phaser.io/
+* Phaser CDN：https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js
+
+### 關聯API
+
+* Phaser 加載 Manager：https://photonstorm.github.io/phaser3/Phaser.LoaderManager.html
+* Phaser 物理引擎：https://photonstorm.github.io/phaser3/Phaser.Physics.Arcade.html
+* Phaser 粒子效果：https://photonstorm.github.io/phaser3/Phaser.GameObjects.Particles.Particles.html
+
+以上是 Phaser 遊戲程式的基本概念介紹。希望這個教學網頁能夠幫助您了解 Phaser 的基礎知識。

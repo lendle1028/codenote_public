@@ -1,0 +1,27 @@
+[
+    {
+        "url": "/plugins/explorer.js",
+        "allows": "*",
+        "excludes":""
+    },
+    {
+        "url": "/plugins/ai_inspector.js",
+        "allows": "*",
+        "excludes":"11111112"
+    },
+    {
+        "url": "/plugins/ai_inspector2.js",
+        "allows": "11111112",
+        "excludes":""
+    },
+    {
+        "url": "/plugins/pair_programming.js",
+        "allows": "*",
+        "excludes":""
+    },
+    {
+        "url": "/plugins/readings.js",
+        "allows": "*",
+        "excludes":""
+    }
+]

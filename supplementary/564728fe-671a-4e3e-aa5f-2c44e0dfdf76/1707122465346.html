@@ -1,0 +1,47 @@
+
+
+
+  <title>Phaser 遊戲程式教學</title>
+
+
+  <h1>Phaser 遊戲程式教學</h1>
+  <p>歡迎來到 Phaser 遊戲程式教學網頁！在這裡，我將會逐步介紹如何使用 Phaser 創建一個遊戲場景，包括預加載素材、創建角色、設定物理碰撞等。讓我們開始吧！</p>
+
+  <h2>預加載素材</h2>
+  <p>在遊戲開始前，我們需要預先加載遊戲所需的素材，例如圖片、動畫等。以下是一個 preload 函式的範例，用來加載火箭圖片：</p>
+  <pre>    &lt;script&gt;
+      preload() {
+        this.load.image('rocket', 'assets/rocket.png');
+      }
+    &lt;/script&gt;
+  </pre>
+
+  <h2>創建遊戲場景</h2>
+  <p>接下來，我們需要創建一個遊戲場景（Scene），並在其中添加遊戲物件，例如火箭、敵人等。以下是一個 create 函式的範例，用來創建火箭物件：</p>
+  <pre>    &lt;script&gt;
+      create() {
+        this.rocket = new Rocket(this, 100, 300);
+        this.physics.add.existing(this.rocket);
+      }
+    &lt;/script&gt;
+  </pre>
+
+  <h2>物理碰撞處理</h2>
+  <p>在遊戲中，我們需要處理物體之間的碰撞事件，例如火箭與敵人的碰撞。以下是一個物理碰撞處理的範例，用來處理火箭與敵人碰撞時的事件：</p>
+  <pre>    &lt;script&gt;
+      update() {
+        this.physics.add.overlap(this.rocket, this.enemies, function(rocket, enemy) {
+          // 在碰撞時觸發的事件
+        });
+      }
+    &lt;/script&gt;
+  </pre>
+
+  <h2>參考資料</h2>
+  <p>如果你想深入了解 Phaser 遊戲程式開發，可以參考以下資料：</p>
+  <ul>
+    <li><a href="https://phaser.io/">Phaser 官方網站</a></li>
+    <li><a href="https://phaser.io/examples">Phaser 範例</a></li>
+    <li><a href="https://phaser.io/docs/3.15.1/index">Phaser 文件</a></li>
+  </ul>
+

@@ -1,0 +1,63 @@
+
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+<script src="./Player.js"></script>
+<script src="./Scene.js"></script>
+
+<script>
+var config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 300 },
+      debug: false
+    }
+  },
+  scene: {
+    create: create,
+    update: update
+  }
+};
+
+var game = new Phaser.Game(config);
+
+function create() {
+  this.add.image(400, 300, 'sky');
+  
+  this.platforms = this.physics.add.staticGroup();
+  this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  
+  this.player = new Player(this, 100, 450);
+  
+  this.physics.add.collider(this.player, this.platforms);
+}
+
+function update() {
+  this.player.update();
+}
+</script>
+
+
+
+
+
+```
+
+在這個教學中，我們將使用 Phaser 遊戲引擎來建立一個簡單的平台遊戲。在上面的程式碼中，我們定義了一個遊戲配置 `config`，設定了遊戲畫面大小、物理引擎為 arcade、重力方向等。接著，我們創建了一個場景 `create` 和 `update` 函式分別用來初始化遊戲內容和更新遊戲狀態。
+
+在 `create` 函式中，我們新增了背景圖片和地板，並創建了一個玩家角色 `this.player`。我們使用 `this.physics.add.staticGroup()` 創建了一個靜態的平台群組 `this.platforms`，並將玩家角色和平台之間設定碰撞檢測 `this.physics.add.collider(this.player, this.platforms)`。
+
+在 `update` 函式中，我們更新玩家的狀態，使其能夠移動和互動。
+
+在這個遊戲程式中，`this.physics.add.collider` 函式用於設定兩個物體之間的碰撞檢測，一旦兩個物體發生碰撞，就會觸發指定的行為。在這個例子中，當玩家角色碰撞到平台時，玩家會停止下落，防止角色掉落到地圖之外，碰撞函式非常重要，可以有效控制遊戲中物體之間的互動。
+
+如有任何疑問或更多資訊，歡迎參考 Phaser 官方文件 [Phaser 官方文件](https://phaser.io/learn)。希望這個教學對你有所幫助，祝你學習順利！

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <title>Hello, Codeworld!</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.css" rel="stylesheet">
+        <script src="/diff.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js" integrity="sha512-lNjb0qWDVvt1zfSiXufaxtlFtenve3BLbvljxuMXuSr0DE0HYp5OhX0u89uwNd6MvlX1bgJ8ulfG4JMGurs8UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            .split {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .gutter {
+                background-color: #eee;
+                background-repeat: no-repeat;
+                background-position: 50%;
+                z-index: 1000;
+            }
+
+            .gutter.gutter-horizontal {
+                background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+                cursor: col-resize;
+            }
+        </style>
+    </head>
+    <body> 
+        <div>
+            <nav class="navbar navbar-expand-lg bg-dark justify-content-between" data-bs-theme="dark">
+                    <a class="navbar-brand" href="/"><i class="bi bi-file-earmark-code-fill"></i>&nbsp;CODENOTE</a>
+                    <div class="btn-group mr-1">
+                        <button type="button" class="btn btn-danger" onclick="saveCode();">
+                            Save
+                        </button>
+                        <button class="btn btn-success" onclick="goPreview();"><i class="bi bi-caret-right-square-fill" style="font-size: 20px"></i></button>
+                        <button class="btn btn-warning mr-1" onclick="download();"><i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 20px"></i></button>
+                    </div>
+            </nav>
+            <div class="input-group m-1 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Code</span>
+                </div>
+                <input type="text" class="form-control"  id="codeName" readonly value='Scene.js'>
+            </div>
+            <input type="hidden" id="code" name="code_content" value=''>
+            <input type="hidden" id="note" name="note_content" value=''>
+            <div class="split" style="width: 99vw">
+                <div id="list_panel" style="width: 30%">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="tab">
+                          <button class="nav-link active" id="explorerTab" data-bs-toggle="tab" data-bs-target="#explorer" type="button" role="tab" aria-controls="explorer" aria-selected="true">Explorer</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="explorer" role="tabpanel" aria-labelledby="explorerTab">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Code Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="code: ${project.codeinfoes}">
+                                        <td th:text="${code.code_nmae}" th:attr="onclick='loadCode(\''+${code.codeid}+'\');'" style='cursor:pointer'></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="split" style="width: 70%" id="code_panel">
+                    <div class="p-0" id="split-1" style="width: 48%; z-index: 1000;">
+                        <div class="p-0" id="container" style=" height: 580px; border: 0px solid #D5DBDB; width: 98%"></div>
+                    </div>
+                    <div class="p-0" id="split-2" style="width: 48%; z-index: 1000;">
+                        <div class="p-0" id="container2" style=" height: 580px; border: 0px solid #D5DBDB; width: 98%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var codeid=null;//"30b18dfa-5ec3-453e-bd33-3323e6064012";
+            var projectid = [[${projectId}]];//"01386f1f-23f2-4541-84d9-8130792cfce7";
+        </script>
+        <script src="../../monaco/vs/loader.js"></script>
+        <script>
+            var editor = null, editor2 = null;
+            const EDITING_NONE = -1, EDITING_CODE = 0, EDITING_NOTE = 1;
+            var codelan;
+            var editorPrevValue = null;
+            var editor2PrevValue = null;
+            var currentEditingSection = EDITING_NONE;
+            var diffArray = [];
+            var flagAdjustingNoteLineNumber = false;
+            let url = "/previewCode?projectId=" + projectid;
+            let codeInfoBean=null;
+            
+            $.busyLoadSetup({animation: "slide", background: "rgba(127,63,191,0.54)"});
+            let modified=false;
+            function loadCode(codeid){
+                $.busyLoadFull("show", {text: "LOADING ...", textColor: "white", color: "#DCB5FF", textPosition: "bottom"});
+                if(modified){
+                    saveCode(function(){
+                        loadCodeAsync(codeid);
+                    });
+                }else{
+                    loadCodeAsync(codeid);
+                }
+            }
+            
+            function loadCodeAsync(codeid){
+                $.ajax("codeInfoBean/"+codeid, {
+                    success: function(d){
+                        codeInfoBean=d;
+                        diffArray = [];
+                        $("#codeName").val(codeInfoBean.code_nmae);
+                        codelan = codeInfoBean.code_nmae;
+                        let codelan_num = codelan.indexOf(".");
+                        codelan = codelan.substring(codelan_num + 1);
+                        if (codelan == "js") {
+                            codelan = "javascript";
+                        } else if (codelan == "html") {
+                            codelan = "html";
+                        }
+                        monaco.editor.setModelLanguage(editor.getModel(),codelan);
+                        editorPrevValue = codeInfoBean.code_content;
+                        editor2PrevValue = codeInfoBean.noteInfoBean.note_content;
+                        currentEditingSection = EDITING_NONE;
+                        
+                        //switch to no-op temporarily
+                        editor.getModel().onDidChangeContent((event)=>{});
+                        editor2.getModel().onDidChangeContent((event)=>{});
+                        //////////////////////////////
+                        editor.setValue(codeInfoBean.code_content);
+                        editor2.setValue(codeInfoBean.noteInfoBean.note_content);
+                        //turn on content change tracking
+                        editor.getModel().onDidChangeContent((event) => {
+                            modified=true;
+                            if (currentEditingSection != EDITING_CODE) {
+                                let prevEditingSection = currentEditingSection;
+                                currentEditingSection = EDITING_CODE;
+                                currentEditingSectionChanged(prevEditingSection, currentEditingSection);
+                            }
+
+                            while (editor2.getModel().getLineCount() < editor.getPosition().lineNumber) {
+                                editor2.setValue(editor2.getValue() + "\r\n");
+                            }
+                            
+                            flagAdjustingNoteLineNumber = true;
+                            editor2.getModel().applyEdits([{
+                                    range: {startLineNumber: editor.getPosition().lineNumber, endLineNumber: editor.getPosition().lineNumber},
+                                    text: ""
+                                }]);
+                            flagAdjustingNoteLineNumber = false;
+                        });
+                        editor2.getModel().onDidChangeContent((event) => {
+                            modified=true;
+                            if (flagAdjustingNoteLineNumber) {
+                                return;
+                            }
+                            if (currentEditingSection != EDITING_NOTE) {
+                                let prevEditingSection = currentEditingSection;
+                                currentEditingSection = EDITING_NOTE;
+                                currentEditingSectionChanged(prevEditingSection, currentEditingSection);
+                            }
+                        });
+                        modified=false;
+                        $.busyLoadFull("hide");
+                    },
+                    error: function(){
+                        modified=false;
+                        $.busyLoadFull("hide");
+                    }
+                });
+            }
+            
+            function saveCode(callback) {
+                let diffs = calculateDiff(null);
+                updateDiffArray(diffs);
+//                console.log(diffArray);
+                codeInfoBean.code_content = editor.getValue();
+                codeInfoBean.noteInfoBean.note_content = editor2.getValue();
+                let monacoSaveTempBean = {
+                    diffArray: diffArray,
+                    cib: codeInfoBean
+                };
+                $.busyLoadFull("show", {text: "SAVING ...", textColor: "white", color: "#DCB5FF", textPosition: "bottom"});
+                $.ajax("/savecode?projectId=" + projectid, {
+                    type: "POST",
+                    data: JSON.stringify(monacoSaveTempBean),
+                    contentType: "application/json",
+                    success: function () {
+                        modified=false;
+                        $.busyLoadFull("hide");
+                        if(callback){
+                            callback();
+                        }
+//                        alert("修改內容已儲存成功，請至專案頁面試試看效果。");
+//                        location.href = 'monaco/project_id/' + projectid;
+                    },
+                    error: function () {
+                        $.busyLoadFull("hide");
+                    }
+                });
+            }
+        </script>
+        <script>
+            function loadEditor(){
+                codelan = "text";
+                require.config({paths: {vs: '../../monaco/vs'}});
+                //API:  https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ICodeEditor.html#onDidChangeModel
+                require(['vs/editor/editor.main'], function () {
+                    editor = monaco.editor.create(document.getElementById('container'), {
+                        language: codelan,
+                        theme: 'vs',
+                        automaticLayout: true
+                    });
+
+                    editor2 = monaco.editor.create(document.getElementById('container2'), {
+                        language: 'text',
+                        theme: 'vs',
+                        automaticLayout: true
+                    });
+                    
+                    
+                    Split(["#list_panel", "#code_panel"], {
+                        sizes: [20, 80],
+                    });
+                    Split(["#split-1", "#split-2"], {
+                        sizes: [70, 30],
+                    });
+                });
+            }
+            
+            
+            function currentEditingSectionChanged(oldSection, newSection) {
+                let diffs = calculateDiff(oldSection);
+                if (diffs.length > 0) {
+                    updateDiffArray(diffs);
+                }
+            }
+
+            function updateDiffArray(diffs) {
+                if (diffs && diffs.length > 0) {
+                    for (let diff of diffs) {
+                        diffArray.push(diff);
+                    }
+                }
+            }
+
+            function calculateDiff(filterEditingSection) {
+                let ret = [];
+                if ((filterEditingSection == null || filterEditingSection == EDITING_CODE) && editor.getValue() != editorPrevValue) {
+                    //then there are modifications in the code panel
+                    let editorNewValue = editor.getValue();
+                    const diff = JsDiff.createTwoFilesPatch("oldCode", "newCode", editorPrevValue, editorNewValue);
+                    editorPrevValue = editorNewValue;
+                    ret.push({
+                        timestamp: new Date().getTime(),
+                        diffSource: "code",
+                        diff: diff
+                    });
+                }
+                if ((filterEditingSection == null || filterEditingSection == EDITING_NOTE) && editor2.getValue() != editor2PrevValue) {
+                    //then there are modifications in the note panel
+                    let editor2NewValue = editor2.getValue();
+                    const diff = JsDiff.createTwoFilesPatch("oldNote", "newNote", editor2PrevValue, editor2NewValue);
+                    editor2PrevValue = editor2NewValue;
+                    ret.push({
+                        timestamp: new Date().getTime(),
+                        diffSource: "note",
+                        diff: diff
+                    });
+                }
+                return ret;
+            }
+            
+            function goPreview() {
+                if(modified){
+                    saveCode(function(){
+                        window.open(url, "_blank");
+                    });
+                }else{
+                    window.open(url, "_blank");
+                }
+                
+            }
+            function download() {
+                $.ajax("/exportProjectBeans/project_id/" + projectid, {
+                    type: "GET",
+                    success: function (download_url) {
+                        window.open(download_url);
+                    },
+                    error: function () {}
+                });
+            }
+            loadEditor();
+        </script>
+        <!--
+        test live blocks
+        -->
+        <script type="module">
+            /*import { createClient }
+            from "https://cdn.jsdelivr.net/npm/@liveblocks/client@1.7.1/+esm";
+            import LiveblocksProvider from "https://cdn.jsdelivr.net/npm/@liveblocks/yjs@1.7.1/+esm";
+            import * as Y from "https://cdn.jsdelivr.net/npm/yjs@13.6.9/+esm";
+            import { MonacoBinding }
+            from "https://cdn.jsdelivr.net/npm/y-monaco@0.1.5/+esm";
+            const client = createClient({
+                publicApiKey: "pk_dev_1y2L9SCWabu2QTLcsrWl0QqjqnoMgdLEayw1IPNNol42kwYfjwkeySqGAP_nbM41",
+            });
+            const {room, leave} = client.enterRoom("my-room", {
+                initialPresence: {},
+            });
+            const yDoc = new Y.Doc();
+            const yText = yDoc.getText("monaco");
+            const yProvider = new LiveblocksProvider(room, yDoc);
+            
+            function setupLiveBlock(){
+                 // Attach Yjs to Monaco
+                const monacoBinding = new MonacoBinding(
+                  yText,
+                  editor.getModel(),
+                  new Set([editor]),
+                  yProvider.awareness
+                );
+            }
+           window.setupLiveBlock=setupLiveBlock;*/
+
+        </script>
+    </body>
+</html>

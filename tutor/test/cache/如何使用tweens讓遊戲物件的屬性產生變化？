@@ -1,0 +1,1 @@
+{"answerableProbability":0.9999999,"content":"{\"nextEn\":[\"What are tweens?\",\"What can tweens be used for?\"],\"next\":[\"什麼是 tweens？\",\"tweens 可以用來做什麼？\"],\"content\":\"\\r\\n使用 Phaser.Tweens 可以讓遊戲物件的屬性隨著時間而變化。下面是一個範例，通過設定 tween 的目標物件、目標屬性、起始值和結束值，以及持續時間和緩動函數，可以讓物件在畫面上產生動畫效果。除了使用預設的緩動函數外，你也可以自定義緩動函數來控制動畫的速度變化。透過 tweens 的多種設定，可以讓遊戲元素在遊戲中呈現出更生動的動態效果，提升遊戲的互動性。\\r\\n\"}"}

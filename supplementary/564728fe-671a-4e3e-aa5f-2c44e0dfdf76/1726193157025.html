@@ -1,0 +1,72 @@
+
+
+
+  <title>Phaser 遊戲程式教學</title>
+
+
+
+<h1>Phaser 遊戲程式教學</h1>
+
+<p>Phaser 是一個強大的 HTML5 遊戲框架，可以幫助開發者輕鬆製作各種遊戲。在這個教學中，我們將教授如何使用 Phaser 開發遊戲程式。</p>
+
+<h2>設定遊戲場景</h2>
+<p>首先，在創建遊戲之前，我們需要設定遊戲場景。在以下程式碼片段中，我們定義了一個名為 Scene 的場景，並且在 create 函式中加入了一個背景圖片。</p>
+
+```javascript
+class Scene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'Scene' });
+    }
+
+    preload() {
+        this.load.image('background', 'assets/background.png');
+    }
+
+    create() {
+        this.add.image(0, 0, 'background').setOrigin(0, 0);
+    }
+}
+```
+
+<h2>建立遊戲物件</h2>
+<p>接下來，我們可以建立遊戲中的各種物件，比如火箭、敵人、子彈等。以下是一個簡單的火箭物件的建立範例：</p>
+
+```javascript
+class Rocket extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'rocket');
+        scene.add.existing(this);
+    }
+}
+```
+
+<h2>處理碰撞事件</h2>
+<p>在遊戲中，碰撞事件是非常重要的，我們可以使用 Phaser 提供的物理引擎來處理碰撞。以下是一個示例，顯示如何處理火箭和敵人之間的碰撞事件：</p>
+
+```javascript
+scene.physics.add.collider(rocket, enemy, function(rocket, enemy) {
+    rocket.disableBody(true, true);
+    enemy.disableBody(true, true);
+});
+```
+
+<h2>更新遊戲狀態</h2>
+<p>最後，我們還需要定期更新遊戲的狀態，比如移動物件、檢測碰撞等。在 update 函式中，可以實現這些功能：</p>
+
+```javascript
+update() {
+    // 檢測火箭是否超出邊界
+    if (rocket.x &lt;= 0 || rocket.x &gt;= 800 || rocket.y &lt;= 0 || rocket.y &gt;= 600) {
+        rocket.disableBody(true, true);
+    }
+}
+```
+
+<h2>參考資料</h2>
+<ul>
+  <li><a href="https://phaser.io/">Phaser 官方網站</a></li>
+  <li><a href="https://phaser.io/examples/v3/category/games">Phaser 遊戲範例</a></li>
+  <li><a href="https://github.com/photonstorm/phaser3-examples">Phaser GitHub 範例</a></li>
+</ul>
+
+

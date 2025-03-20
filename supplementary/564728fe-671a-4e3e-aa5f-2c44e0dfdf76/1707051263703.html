@@ -1,0 +1,74 @@
+
+
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser 遊戲程式教學</title>
+
+
+
+    <h1>Phaser 遊戲程式教學</h1>
+    <p>在這個教學中，我們將使用 Phaser 遊戲框架來建立一個基本的遊戲。</p>
+
+    <h2>前置準備</h2>
+    <p>在開始之前，請確保您已經安裝了 Phaser 遊戲框架，您可以在以下連結中找到詳細的安裝指南：<a href="https://phaser.io/download" target="_blank">Phaser 下載頁面</a></p>
+
+    <h2>設置遊戲場景</h2>
+    <p>首先，我們需要建立一個遊戲場景。我們可以使用以下程式碼來定義一個 Scene 類別：</p>
+
+    ```javascript
+    class Scene extends Phaser.Scene {
+        constructor() {
+            super({ key: 'gameScene' });
+        }
+
+        preload() {
+            // 加載遊戲中需要使用的圖片
+            this.load.image('rocket', 'rocket.png');
+            // 加載其他遊戲所需資源...
+        }
+
+        create() {
+            // 創建遊戲場景
+            // 初始化遊戲元素，例如玩家角色、敵人、障礙物等
+        }
+
+        update() {
+            // 更新遊戲場景中各個物件的狀態
+        }
+    }
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        scene: [Scene]
+    };
+
+    var game = new Phaser.Game(config);
+    ```
+
+    <h2>操作遊戲角色</h2>
+    <p>在遊戲中，我們需要讓玩家角色能夠移動、攻擊等。以下是一些控制角色移動的程式碼：</p>
+
+    ```javascript
+    // 控制角色移動的程式碼範例
+    this.rocket.setVelocityX(-160); // 設定 X 方向的速度
+    this.rocket.setVelocityY(-100); // 設定 Y 方向的速度
+    ```
+
+    <h2>碰撞檢測</h2>
+    <p>在遊戲中，需要對物體之間的碰撞進行檢測。以下是一個檢測子彈與敵人碰撞的例子：</p>
+
+    ```javascript
+    this.physics.add.overlap(this.bullets, this.enemies, function(bullet, enemy) {
+        // 子彈與敵人碰撞時的處理
+    });
+    ```
+
+    <p>透過以上的程式碼範例，您可以開始建立您的 Phaser 遊戲程式。如需更多資源和範例，請參考官方文檔：<a href="https://phaser.io" target="_blank">Phaser 官方網站</a></p>
+
+
+

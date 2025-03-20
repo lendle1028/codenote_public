@@ -1,0 +1,79 @@
+
+
+
+  <title>Phaser 遊戲程式教學</title>
+
+
+  <h1>Phaser 遊戲程式教學</h1>
+  
+  <h2>概念介紹</h2>
+  <p>Phaser 是一個 JavaScript 遊戲開發框架，讓開發者能夠輕鬆地創建 2D 遊戲。在 Phaser 遊戲中，有許多重要的概念，例如 scene、sprite、group、collision 等。下面將詳細說明這些概念。</p>
+  
+  <h2>1. Scene</h2>
+  <p>在 Phaser 中，一個場景（scene）可以視為遊戲中的一個畫面，每個場景中包含遊戲中的元素和邏輯。透過創建場景，您可以組織遊戲中的所有內容。以下是一個示例程式碼:</p>
+  <pre>    <code>
+class Scene extends Phaser.Scene {
+  constructor() {
+    super({key: 'main'});
+  }
+
+  create() {
+    // 在場景中創建遊戲物件
+  }
+
+  update() {
+    // 更新遊戲狀態
+  }
+}
+const config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  scene: [Scene]
+};
+const game = new Phaser.Game(config);
+    </code>
+  </pre>
+
+  <h2>2. Sprite</h2>
+  <p>Sprite 是遊戲中的可見物件，例如玩家、敵人、子彈等。在 Phaser 中，您可以透過 preload 預先載入圖片，然後在場景中使用它們創建 Sprite。以下是一個示例程式碼:</p>
+  <pre>    <code>
+preload() {
+  this.load.image('rocket', 'rocket.png');
+}
+
+create() {
+  this.rocket = this.physics.add.sprite(400, 300, 'rocket');
+}
+    </code>
+  </pre>
+
+  <h2>3. Group</h2>
+  <p>Group 是一種方便管理多個 Sprite 的方式。透過 Group，您可以集中處理多個相關的遊戲物件，例如敵人群組、子彈群組等。以下是一個示例程式碼:</p>
+  <pre>    <code>
+this.enemies = this.physics.add.group();
+
+// 將敵人加入群組
+let enemy = this.enemies.create(200, 100, 'enemy');
+    </code>
+  </pre>
+
+  <h2>4. Collision</h2>
+  <p>在遊戲中，碰撞檢測是一個重要的功能。Phaser 提供了簡單的方式來處理物件之間的碰撞事件。您可以使用 physics.add.overlap() 方法來檢測物件之間的碰撞，並定義碰撞時的處理函式。以下是一個示例程式碼:</p>
+  <pre>    <code>
+this.physics.add.overlap(this.rocket, this.enemies, playerHitEnemy, null, this);
+
+function playerHitEnemy(player, enemy) {
+  // 碰撞處理邏輯
+}
+    </code>
+  </pre>
+
+  <h2>參考資料</h2>
+  <ul>
+    <li><a href="https://phaser.io/docs/3.55.2/index">Phaser 文件</a></li>
+    <li><a href="https://phaser.io/examples/v3">Phaser 官方範例</a></li>
+  </ul>
+
+
+

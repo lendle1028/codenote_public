@@ -1,0 +1,13 @@
+Camera shake effect
+A really cool feature of Phaser 3 is that of camera effects. Our game is playable but it will be nicer if we can add some sort of camera shake effect. Let’s replace gameOver by:
+
+gameScene.gameOver = function() {
+  // shake the camera
+  this.cameras.main.shake(500);
+  // restart game
+  this.time.delayedCall(500, function() {
+    this.scene.restart();
+  }, [], this);
+}
+The camera will be shaken for 500 miliseconds
+After 500 ms we are restarting the scene by using this.time.delayCall, which allows you to execute a method after some time

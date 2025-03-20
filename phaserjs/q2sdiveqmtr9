@@ -1,0 +1,25 @@
+Treasure hunt
+What good is a game without a clear goal (take that Minecraft!). Let’s add a treasure chest at the end of the level. When the player position overlaps with that of the treasure, we’ll restart the scene.
+
+Since we already preloaded all assets, jump straight to the sprite creation part. Notice how we position the chest in X: 80 pixels to the left of the edge of the screen:
+
+  // goal
+  this.treasure = this.add.sprite(this.sys.game.config.width - 80, this.sys.game.config.height / 2, 'treasure');
+  this.treasure.setScale(0.6);
+In this tutorial we are not using a physics system such as Arcade (which comes with Phaser). Instead, we are checking collision by using a utility method that comes in Phaser, which allows us to determine whether two rectangles are overlapping.
+
+We’ll place this check in update, as it’s something we want to be testing for at all times:
+
+  // treasure collision
+  if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), this.treasure.getBounds())) {
+    this.gameOver();
+  }
+The getBounds method of a sprite gives us the rectangle coordinates in the right format.
+Phaser.Geom.Intersects.RectangleToRectangle will return true if both rectangles passed overlap
+Let’s declare our gameOver method (this is our own method, you can call it however you want – it’s not part of the API!). What we do in this method is restart the scene, so you can play again:
+
+// end the game
+gameScene.gameOver = function() {
+    // restart the scene
+    this.scene.restart();
+}

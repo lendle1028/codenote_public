@@ -1,0 +1,43 @@
+stuid,projectname,note
+11255035,Phaser Game, 產生'主角' 設定'敵人s'群組 設定'子彈s'群組 設定'炸彈s'群組 敵人是產生新"敵人"在(this,x,y,x-70,x+100) 在'敵人s'群組加入"敵人" 
+10972001,Phaser Game, 建立主角的步驟39-42 建立敵人移動範圍(動態?組)46-51 建立敵方射出炸彈及角色接觸到敵方炸彈時死亡的動作55-72 建立壁壘物件(靜態群組)77-79 建立壁壘與炸彈的互動84-100 使角色可移動107-113 發射子彈121-125 
+11255005,Phaser Game,建立主角 建立敵人 建立子彈、敵人、主角間的碰撞 建立障礙物 建立子彈、敵人、障礙物間的碰撞 建立移動鈕 建立子彈 
+11255040,Phaser Game, 建立主角 建立敵人 炸彈跟敵人接觸關係 向左 向右 都沒按 可以發射子彈 且 500ms發射一次 
+11255014,Phaser Game, 建立主角 建立敵人 建立子彈 建立炸彈 設定敵人移動範圍 
+11050003,Phaser Game, 建立主角 建立三個動態群組 敵人 子彈 炸彈 建立敵人範圍 disableBody 消滅 Math.random 隨機變數 Velocity 用速度的方式控制 讓子彈不連續 結束遊戲 檢查子彈 
+11255002,Phaser Game, 建立新角色(火箭) 建立角色(敵人) 子彈碰到敵人(相抵)or 敵人碰到子彈(相抵) 角色(火箭)碰到子彈(炸彈)互相抵消 與磚塊之間的碰撞 
+11255003,Phaser Game, 建立一個有趣的主角 建立新的敵人,加入敵人群組 設定敵人移動範圍 加入敵人 子彈與敵人之間的事件處理 火箭與炸彈之間的事件處理 子彈與炸彈之間的事件處理 建立靜態?組 → 方便設定及管理 
+11255047,Phaser Game, 建立了敵人 建立了美麗的主角 
+11255032,Phaser Game, 不用把照片下載下來就可以使用 建立火箭 新增了會移動的敵人 
+11255004,Phaser Game, 建立一艘火箭 建立物理群組的敵人 建立子彈的物理群組 建立炸彈的物理群組 這個動態群組子彈和敵人增加重疊在function(o1, o2) (o1, o2)碰到會消滅 這個動態群組火箭和炸彈增加重疊在function(o1, o2) (o1, o2)碰到會消滅 這個動態群組炸彈和子彈增加重疊在function(o1, o2) (o1, o2)碰到會消滅 加入靜態群組 加入新的障礙物在(this, x, y) 這個動態群組障礙物和子彈增加重疊在function(o1, o2) (o1, o2)碰到會消滅 這個動態群組障礙物和炸彈增加重疊在function(o1, o2) (o1, o2)碰到會消滅 這個動態群組障礙物和敵人增加重疊在function(o1, o2) (o1)碰到會消滅 向左移 這個火箭距離)-160 向右移 火箭距離 +160 不移動 火箭 0 子彈從火箭發射載x,y-10 子彈會加子彈 子彈設置在-100 
+11050017,Phaser Game, 建立了主角
+11050017,Phaser Game, 創建一個火箭角色以及管理敵人 、子彈和炸彈的物件動態群組， 以便在遊戲中進行相應的操作和處理， 比如碰撞偵測、更新、渲染等。 在遊戲中添加敵人物件x 和 y 是敵人的初始位置座標； x - 70 和 x + 100，是關於敵人移動或行為的參數。 設定碰撞overlap 用來偵測兩個物件群組之間的重疊 o1 和 o2，這些參數分別代表碰撞的物件。 disableBody 會把該物件消滅 是在遊戲場景中創建一組隨機生成的靜態方塊 這些方塊以一定的規律分佈在不同的 x 和 y 座標位置 
+11255044,Phaser Game,建立主角37--42步驟 建立移動、巡弋範圍45--50步驟 讓炸彈能夠炸到戰機使其被摧毀54--69步驟 建立遮蔽物70--79步驟 
+11255038,Phaser Game, 建立主角 建立敵人 主角會死了 設立障礙物 障礙物會消失 主角移動設定 
+11050042,Phaser Game, 物件代表遊戲中的一個火箭角色。Rocket 一個自定義的類別或函數，它被用來初始化火箭的起始位置（x座標為400，y座標為580）。 物件群組用於管理遊戲中的敵人物件 物件群組用於管理遊戲中的子彈物件。 物件群組用於管理遊戲中的炸彈物件 添加敵人物件 this，是指遊戲場景或物件的參考；x 和 y 是敵人的初始位置座標；以及 x - 70 和 x + 100，是關於敵人移動或行為的參數。 是將敵人物件納入統一的管理 overlap ，它用來偵測兩個物件群組之間的重疊，兩者發生碰撞時，將執行指定的回調函數。兩個參數 o1 和 o2，這些參數分別代表碰撞的物件 disableBody將物件自動刪除。 disableBody將物件自動刪除。 在遊戲場景中創建一組隨機生成的靜態方塊，方塊以一定的規律分佈在不同的 x 和 y 座標位置 這一行程式碼創建一個名為 blocks 的物件群組，這個群組將包含靜態物件。 迴圈用來控制行的 y 座標，以創建多行靜態物件 迴圈用來控制列的 x 座標，以創建多列靜態物件。 
+11255020,Phaser Game,創建 火箭 組建 敵人 群組 組建 子彈 群組 組建 炸彈 群組 創建 敵人 加入 敵人 至敵人 群組 設定 子彈和敵人 碰撞後消失 設定 火箭和炸彈 碰撞後消失 設定 子彈和炸彈 碰撞後消失 創建 障礙 加入 障礙 至障礙 群組 設定 障礙和子彈 碰撞後消失 設定 障礙和炸彈 碰撞後消失 設定 障礙和敵人 碰撞後消失 設定 火箭移動 設定 子彈發射速率 加入 子彈 至子彈 群組 
+11255016,Phaser Game, 建立主角 建立動態群組 建立敵人 設定巡邏範圍 將敵人加入群組 設定碰撞,死亡 設定方塊數量,將方塊加入靜態群組 設定方塊與子彈,敵人,炸彈的碰撞 加入控制移動 
+11255046,Phaser Game, 載入圖檔存在變數 建立了無敵強大的主角 建立三個動態?組 → 方便設定及管理，然後再把物體加入 (0,0)在左上角 (x - 70, x + 100) → 是設定巡弋範圍 disableBody 會把該物件消滅 o1 = this.bullets ?面的某個個體 o2 = this.enemies ?面的某個個體 第一個true是disableGameObject 第二個true是hideGameObject 建立靜態?組 → 方便設定及管理 Math.random() 是 0-1 之間的亂數 建立 Block 物件，加入?組 監聽鍵盤時間 向左 向右 不動 現在的時間 確定 rocket 還活? 把子彈加入子彈?組，這樣比較好控制 對this.enemies ?組?面的每個 enemy 呼叫 update 如果 enemy 跑到底下，rocket 就輸了 子彈跑到畫面最上方的話，自己消失掉 
+11255022,Phaser Game, 從網路抓圖片 建立新物件 加新的動態組件 重複偵測是否受到傷害 block是靜態組件 
+11255029,Phaser Game,create protagonist create protagonist movement trajectory create protagonist collision area create enimies create enimies movement trajectory create bullet create bullet movement trajectory create bullet collision area create contact event(protagonist,enimies. and bullet) create object generation(line 41 - 44) create object (bracket position) Check for erroes with Google's program page 
+11255008,Phaser Game, 建立一個主角(標註打錯-建立/建議) 建立敵人群組 使敵人能移動 蹩腳的敵人 將設定加入敵人群組 設定碰撞、效果 子彈和敵人碰撞後消失 主角和炸彈碰撞後消失 子彈和炸彈碰撞後消失 建立靜態群組 判定生成數量 建立block物件 將物件加入block群組 block的碰撞事件 控制移動、靜止 發射子彈 設定開火延遲
+11255021,Phaser Game, 從網路抓圖片 可以不用電腦檔案 建立新物件 加新動態群組 重複偵測是否受到傷害 block是靜態群組 
+11255010,Phaser Game,放入主角、敵人、子彈與炸彈 讓敵人左右移動 製作碰撞箱 先製作敵人與子彈的碰撞 在製作主角與炸彈的 在來是子彈與炸彈的 讓方塊隨機產生 控制移動 
+11255006,Phaser Game, 建立火箭主角並火箭、敵人、子彈和炸彈的物理動態群 建立敵人並加入enemies?組中 建立子彈與敵人碰觸事件時消失的處理 建立火箭與炸彈碰觸事件時消失的處理 建立子彈與炸彈碰觸事件時消失的處理 建立障礙物和它的物理靜態群並加入群組 建立障礙物與子彈碰觸事件時消失的處理 建立障礙物與炸彈碰觸事件時消失的處理 建立障礙物與敵人碰觸事件時消失的處理 建立控制移動 向左 向右 不移動 
+11255015,Phaser Game,Preload imagine using defaults << subjects to change Adding create onto the game: Using defaults. Repeatly creating enemies using duel (for) structure. ^^ While doing this add the newly created one add into groups. In here updates will have the set of create triggered. So overlapping code can be put in create. Default. Fun fact: no one knows how to rng but they make it look like it. Using rng to create blocks across a certain lane. (Yes. If I mess with the 0.9. I'm Fucking Invinsible!) Default. Movement keys: Default. Time added on bullet firing rate. End of commentary. Conclusion: Moddable but am lazy >_> 
+11255048,Phaser Game, 建立主角 建立敵人 
+11255025,Phaser Game,39 建立一個主角 40 讓敵人物件加入群組 41 將子彈物件加入群組 42 將炸彈加入群組 //40-42都是動態群組，不然不會動 50 建立會水平移動的敵人，藉由增減數值 51 把會動敵人加入動態群組 59 接觸到子彈bullets死亡並消失 60 接觸到敵人enemies死亡並消失 //建立funtion宣告兩物件接觸時該如何處理 64-75同理 *注意 小心空格位置，我好像發現空格位置及符號問題容易出錯，最後沒辦法只能複製 QQ 
+00000000,Phaser Game, 建立了鱉繳的敵人 建立了帥氣的主角 
+11255043,Phaser Game, 建立主角 建立敵人、巡弋範圍 
+11255019,Phaser Game, 載入圖檔存在變數(14~32) 建立了主角及動態?組(敵人、子彈、炸彈) 往右(+)400 往下(+)580 建立動態?組 方便設定及管理 後續再把物體加入 建立動態?組 方便設定及管理 後續再把物體加入 建立動態?組 方便設定及管理 後續再把物體加入 建立 enemy 並加入 this.enemies ?組中 設定巡弋範圍(x-70),(x+100) 建立 enemy 並加入 this.enemies ?組中 建立匿名函數(λ函數)(54~70) disableBody 會把該物件消滅 o1.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) o2.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) disableBody 會把該物件消滅 o1.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) o2.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) disableBody 會把該物件消滅 o1.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) o2.disableBody 會把該物件消滅(true,true分別是disableGameObject跟hideGameObject) Math.random() 是 0-1 之間的亂數 建立 Block 物件，加入?組 建立 Block 物件，加入?組 disableBody 會把該物件消滅 disableBody 會把該物件消滅 disableBody 會把該物件消滅 disableBody 會把該物件消滅 這?只有消滅 block 向左160 向右160 都沒按 現在的時間 確定 rocket 還活著 把子彈加入子彈?組，這樣比較好控制 
+11255024,Phaser Game, 建立帥氣角色 建立敵人 設定範圍 加入敵人的群組中(X,Y是中心點座標) 碰撞事件處理 函數用來處理兩物件重疊的事件 重疊後炸彈主角都會消滅(disablebody) 障礙物設定(BLOCK)Math.random亂數 建立障礙物與炸彈得碰撞 設立讓rocket移動 
+11255023,Phaser Game, 載入圖檔存在變數 建立噁心的主角 建立三個動態群組以 方便設定及管理 後續再把物體加入 設定巡戈範圍 建立 enemy 並加入 this.enemies 群組中 在 this.bullets 和 this.enemies 之間的接觸事件處理 在 this.rocket 和 this.bombs 之間的接觸事件處理 在 this.bullets 和 this.bombs 之間的接觸事件處理 建立block 加入群組 在 this.blocks 和 this.bullets 之間的接觸事件處理 在 this.blocks 和 this.bombs 之間的接觸事件處理 在 this.blocks 和 this.enemies 之間的接觸事件處理 
+11255011,Phaser Game, 建立主角並加入?組 在遊戲中加入敵人並加入?組 主角向左走 主角向右走 主角靜止 
+11050037,Phaser Game, 建立了一個主角 建立了一個敵人(動態群組) 建立了子彈(動態群組) 建立了炸彈(動態群組) 建立敵人移動範圍 子彈碰到敵人兩個都會消失 主角碰到炸彈兩個都會消失 子彈碰到炸彈兩個都會消失 建立 Block 物件，加入群組 子彈碰到磚塊兩個都會消失 磚塊碰到炸彈兩個都會消失 磚塊碰到敵人只有磚塊會消失 控制移動，左鍵向左，右鍵向右，都不點不動 發射子彈，讓子彈每隔 500ms 才能發射一次 
+11255001,Phaser Game, 建立一個敵人 建立一個主角 
+11255001,Phaser Game, 建立一個敵人 建立一個主角 
+11255051,Phaser Game, 從網路上拿圖片 可以不用本地 建立新物件 加新的動態群組 重複偵測是否受到傷害 block 是靜態群組 
+11050018,Phaser Game, 建立一個主角 建立三個動態群組 左上角是原點 往柚往下都是正的 建立敵人範圍 主角 敵人 子彈 互相碰到會被消滅 隨機產生障礙物 障礙物跟子彈 炸彈 敵人的接觸情況 控制移動速度方向按鍵 發射子彈 並限制發射子彈的頻率 
+11112015,Phaser Game, 創立一個主角 建立三個動態?組 → 方便設定及管理 後續再把物體加入 創立一個蹩腳的主角 設定巡弋範圍 建立 enemy 並加入 this.enemies ?組中 個體和敵人碰撞 disableBody 會把該物件消滅 本體和炸彈碰撞 個體和敵人碰撞 建立 Block 物件，加入?組 個體和個體碰撞 個體和炸彈碰撞 個體和敵人碰撞 設定移動 現在的時間 發射子彈 確定 rocket 還活? 
+10712006,Phaser Game, 建立一個主角 建立三個動態組 再將物體加入 建立場景 將Enemy加入在enemies 使用到三個函數-其中之一為匿名函式 括號裡放參數 主角跟炸彈發生重疊時兩者都要消滅 Math.random() 是 0-1 之間的亂數 ㄌ利用速度函示控制 讓子彈可以從正確位置發射 
+11255026,Phaser Game,巡弋範圍調成各九十後剛好會在碰到邊框時返回不會超出 

@@ -1,0 +1,60 @@
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Rocket Game</title>
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="https://cdn.glitch.global/fd115bd8-4801-458c-bcd2-74430aacde02/phaser.min.js"></script>
+
+
+
+<h1>Phaser 遊戲程式教學 - 火箭遊戲</h1>
+
+<p>在這個教學中，我們將學習使用 Phaser 遊戲引擎來製作一個簡單的火箭遊戲。遊戲的目標是讓火箭躲避炸彈並獲得分數。</p>
+
+<h2>遊戲元素介紹</h2>
+
+<ul>
+  <li>火箭：玩家操控的角色，通過滑鼠控制火箭的移動。</li>
+  <li>炸彈：隨機從上方落下的障礙物，玩家需要躲避炸彈。</li>
+  <li>分數：當火箭成功躲避炸彈時，玩家獲得一分。</li>
+</ul>
+
+<h2>程式碼解析</h2>
+
+<p>在這個遊戲中，我們使用了幾個重要的程式碼片段來控制遊戲的邏輯：</p>
+
+<code>
+// 創建火箭物件
+this.rocket = new Rocket(this);
+
+// 創建炸彈物件
+let newBomb = new Bomb(this);
+
+// 滑鼠事件檢測
+this.input.on('pointermove', function (pointer) {
+    // 控制火箭移動
+    self.rocket.setVelocityX((pointer.x - self.rocket.x) / 2);
+});
+</code>
+
+<h2>遊戲流程</h2>
+
+<p>遊戲開始時，炸彈會隨機從上方落下，玩家需要移動火箭來躲避炸彈。當火箭成功躲避炸彈時，玩家獲得一分。如果炸彈撞到火箭，遊戲結束。</p>
+
+<h2>參考資料</h2>
+
+<ul>
+  <li><a href="https://github.com/photonstorm/phaser/releases/download/v3.55.2/phaser.min.js">Phaser 遊戲引擎下載</a></li>
+  <li><a href="https://cdn.glitch.global/fd115bd8-4801-458c-bcd2-74430aacde02/rocket.png">火箭圖片下載</a></li>
+  <li><a href="https://cdn.glitch.global/fd115bd8-4801-458c-bcd2-74430aacde02/bomb.png">炸彈圖片下載</a></li>
+  <li><a href="https://cdn.glitch.global/fd115bd8-4801-458c-bcd2-74430aacde02/rocket_bombed.png">火箭爆炸圖片下載</a></li>
+</ul>
+
+<script src="./Scene.js"></script>
+<script src="./Rocket.js"></script>
+<script src="./Bomb.js"></script>
+
+

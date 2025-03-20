@@ -1,0 +1,18 @@
+Detecting input
+Phaser 3 provides many ways to work with user input and events. In this particular game we won’t be using events but will just check that the “active input” (be default, the mouse left button or the touch) is on.
+
+If the player is pressing/touching anywhere on the game, our Valkyrie will walk forward.
+
+To check for input in this manner we’ll need to add an update method to our scene object, which will normally be called 60 times per second (it is based on the requestAnimationFrame method, in less performing devices it will be called less often so don’t assume 60 in your game logic):
+
+// executed on every frame (60 times per second)
+gameScene.update = function() {
+  // check for active input
+  if (this.input.activePointer.isDown) {
+    // player walks
+  }
+};
+You can verify that this works by placing a console.log entry in there.
+
+this.input gives us access to the input object for the scene. Different scenes have their own input object and can have different input settings.
+This code will be true whenever the user presses the left button (clicks on the game area) or touches the screen.

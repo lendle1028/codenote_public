@@ -1,0 +1,62 @@
+
+
+
+    <title>Phaser 遊戲程式教學</title>
+
+
+    <h1>Phaser 遊戲程式教學</h1>
+
+    <h2>概念說明</h2>
+    <p>Phaser 是一個用於製作互動式遊戲的 JavaScript 框架，它提供了許多功能和工具，讓開發者可以輕鬆地製作出各種類型的遊戲。</p>
+
+    <h2>使用 Phaser 開發遊戲</h2>
+    <p>在 Phaser 中，我們可以創建不同的場景（Scenes），每個場景可以包含不同的遊戲元素和邏輯。以下是一些重要的概念和程式碼片段：</p>
+
+    <h3>創建新的場景</h3>
+    <p>首先，我們需要創建一個新的場景，可以使用以下程式碼：</p>
+    <code>
+        class Scene extends Phaser.Scene {
+            constructor() {
+                super({ key: 'Scene' });
+            }
+
+            preload() {
+                // 預載遊戲資源
+            }
+
+            create() {
+                // 創建遊戲物件
+            }
+
+            update() {
+                // 遊戲更新邏輯
+            }
+        }
+    </code>
+
+    <h3>創建遊戲物件</h3>
+    <p>在場景中，我們可以創建並管理遊戲物件，如火箭、敵人、子彈等。以下是一些示例程式碼：</p>
+    <code>
+        // 創建火箭物件
+        this.rocket = new Rocket(this, x, y);
+
+        // 創建敵人物件
+        let enemy = new Enemy(this, x, y);
+
+        // 創建子彈物件
+        let bullet = new Bullet(this, type, x, y);
+    </code>
+
+    <h3>處理碰撞事件</h3>
+    <p>在遊戲中，碰撞事件是非常重要的一部分，可以對不同物件之間的碰撞進行處理。以下是處理碰撞事件的程式碼片段：</p>
+    <code>
+        // 設定碰撞事件
+        this.physics.add.overlap(this.rocket, this.enemies, this.hitEnemy, null, this);
+    </code>
+
+    <h2>參考資料</h2>
+    <p>
+        <a href="https://phaser.io/">Phaser 官方網站</a><br>
+        <a href="https://phaser.io/examples/v3">Phaser 示例</a>
+    </p>
+

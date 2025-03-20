@@ -1,0 +1,80 @@
+
+
+
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser 遊戲程式教學</title>
+
+
+
+  <h1>Phaser 遊戲程式教學 - Rocket 射擊遊戲範例</h1>
+
+  <p>在本教學中，我們將使用 Phaser 遊戲框架來建立一個簡單的 Rocket 射擊遊戲。這個遊戲會包含火箭、敵人、子彈、以及炸彈等元素。</p>
+
+  <h2>準備工作</h2>
+  <p>首先，我們需要準備遊戲所需的各種元素。在這個遊戲中，我們需要建立火箭、敵人、子彈、炸彈等角色，並設置它們的運動和互動。</p>
+
+  <h2>程式碼範例</h2>
+  <pre>    <code>
+      // 建立一個新的 Phaser 遊戲實例
+      var config = {
+          type: Phaser.AUTO,
+          width: 800,
+          height: 600,
+          physics: {
+              default: 'arcade',
+              arcade: {
+                  gravity: { y: 0 },
+                  debug: false
+              }
+          },
+          scene: [Scene]
+      };
+
+      var game = new Phaser.Game(config);
+
+      // Scene 類別
+      class Scene extends Phaser.Scene {
+          constructor() {
+              super({ key: 'game' });
+          }
+
+          preload() {
+              // 預載遊戲素材
+              this.load.image('rocket', 'rocket.png');
+              this.load.image('enemy', 'enemy.png');
+              // 更多素材請參考 Phaser 官方文檔
+          }
+
+          create() {
+              // 初始化遊戲場景
+              this.rocket = new Rocket(this, 400, 500);
+              this.enemies = this.physics.add.group();
+              // 加入更多遊戲元素
+          }
+
+          update() {
+              // 遊戲更新邏輯
+              // 檢測碰撞、移動等操作
+          }
+      }
+    </code>
+  </pre>
+
+  <h2>遊戲元素說明</h2>
+
+  <p>在這個遊戲中，火箭（Rocket）是玩家控制的主角，敵人（Enemy）是火箭要擊敗的對手，子彈（Bullet）可以從火箭發射出去，炸彈（Bomb）則是敵人會投放的攻擊。</p>
+
+  <h2>下一步</h2>
+  <p>請繼續完善遊戲邏輯，控制火箭的移動和射擊，處理敵人和子彈的碰撞事件，以及增加遊戲元素的動畫效果等。這將使您的遊戲更加有趣和具挑戰性。</p>
+
+  <h3>參考資料：</h3>
+  <ul>
+    <li><a href="https://phaser.io/">Phaser 官方網站</a></li>
+    <li><a href="https://rexrainbow.github.io/phaser3-rex-notes/docs/site/">Phaser 教學筆記</a></li>
+    <li><a href="https://photonstorm.github.io/phaser3-docs/index.html">Phaser 文件</a></li>
+  </ul>
+
+

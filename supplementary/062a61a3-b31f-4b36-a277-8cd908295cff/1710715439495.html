@@ -1,0 +1,31 @@
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Phaser 遊戲程式教學</title>
+
+
+
+<h1>Phaser 遊戲程式教學 - Preload 函式</h1>
+
+<p>在 Phaser 中，preload 函式是非常重要的，它用來預載遊戲中所需的資源，例如圖片、聲音等。這樣可以確保遊戲開始時所有資源都已經加載完畢，遊戲畫面不會出現延遲。</p>
+
+<p>以下是一個簡單的 preload 函式示例：</p>
+
+```javascript
+preload() {
+    this.load.image("sky", "https://cdn.glitch.global/c35e6710-f97c-4f62-bc0d-4b152397db4e/sky.png");
+    this.load.image("ground", "https://cdn.glitch.global/c35e6710-f97c-4f62-bc0d-4b152397db4e/platform.png");
+    this.load.spritesheet("dude", "https://cdn.glitch.global/c35e6710-f97c-4f62-bc0d-4b152397db4e/dude.png", { frameWidth: 32, frameHeight: 48 });
+}
+```
+
+<p>在這個範例中，我們使用 `load.image` 與 `load.spritesheet` 方法來預載遊戲中的圖片資源，以及設定圖片的寬度與高度。</p>
+
+<p>值得注意的是，請確保圖片資源的連結是正確的，並且在遊戲中使用相對或絕對路徑，這樣才能順利載入資源。</p>
+
+<p>更多有關 Phaser preload 函式的詳細資訊，可以參考<a href="https://photonstorm.github.io/phaser3-docs/Phaser.Loader.LoaderPlugin.html#image__anchor">Phaser LoaderPlugin 文檔</a>。</p>
+
+

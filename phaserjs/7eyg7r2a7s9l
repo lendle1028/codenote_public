@@ -1,0 +1,21 @@
+The Player
+Time to create a simple player we can control by either clicking or touching on the game. Since we’ll be adding more sprites, let’s add these to preload so we don’t have to modify it again later:
+
+// load asset files for our game
+gameScene.preload = function() {
+  // load images
+  this.load.image('background', 'assets/background.png');
+  this.load.image('player', 'assets/player.png');
+  this.load.image('dragon', 'assets/dragon.png');
+  this.load.image('treasure', 'assets/treasure.png');
+};
+We’ll then add the player sprite and reduce it’s size by 50%, inside of create:
+
+  // player
+  this.player = this.add.sprite(40, this.sys.game.config.height / 2, 'player');
+  // scale down
+  this.player.setScale(0.5);
+We are placing our sprite at x = 40. For y, we are placing it in the middle of the game viewport. this gives us access to our current scene object, this.sys.game gives us access to the global game object.  this.sys.game.config gives us the configuration we defined when initiating our game.
+Notice we are saving our player to the current scene object (this.player). This will allow us to access this variable from other methods in our scene.
+To scale down our player we using the setScale method, which applies in this case a scale of 0.5 to both x and y (you could also access the scaleX and scaleY sprite properties directly).
+Our Valkyrie is ready for some action! We need to develop next the ability for us to move her with the mouse or touchscreen.

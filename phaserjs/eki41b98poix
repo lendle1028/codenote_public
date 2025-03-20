@@ -1,0 +1,56 @@
+第一节 - 前言
+Published on 20th February 2018
+
+image
+
+欢迎来看我们的第一个Phaser 3 游戏实例教程！在此我们将学习怎样做一个小游戏，它会有个玩家（player）在平台（platform）上来回跑、跳，收集星星，躲避坏蛋。在此过程中，我们将解释这个框架的一些核心特性。
+
+Phaser是什么?
+Phaser是一个HTML5游戏框架，它的目的是辅助开发者真正快速地制作强大的、跨浏览器的HTML5游戏。 做这个框架，主要是想发掘现代浏览器（兼及桌面和移动两类系统）的优点，。对浏览器的唯一要求是，支持画布（canvas）标签。
+
+基本要求
+下载这个zip文件，它含有本教程每一步的代码和资源。
+
+你需要有一点非常、非常基础的JavaScript知识。
+
+也请确认，你已经读过《起步指南》，它会引导你怎样下载Phaser，搭建本地开发环境，再让你看一眼Phaser工程的结构及其核心函数。
+
+如果你已经看过《起步指南》，那么应当下载了Phaser，已经把一切搭建好，准备好写代码了。请下载本教程所需资源，并解压到你的web服务器根目录下。
+
+在你的编辑器中选中、打开part1.html页面，让我们详细看看它的代码。前面是一小段HTML样板代码，它引入了Phaser；接下来的代码结构如下：
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+var game = new Phaser.Game(config);
+
+function preload ()
+{
+}
+
+function create ()
+{
+}
+
+function update ()
+{
+}
+这个config（配置）对象意味着你怎么配置Phaser游戏。有很多选项可以放在这个对象里，当你的Phaser知识增加时，你会碰到它们。不过在本教程中，我们只打算设置渲染器（renderer）、尺寸和默认Scene（场景）。
+
+一个Phaser.Game对象实例（instance）赋值给一个叫game的局部变量，上述配置对象传给这个实例。这将开始启动Phaser的过程。
+
+在Phaser 2 中，对象game用作几乎所有内部系统的入口，并常常是通过全局变量访问它。在Phaser 3 中不再如此，在全局变量中存储游戏实例不再有用。
+
+属性type可以是Phaser.CANVAS，或者Phaser.WEBGL，或者Phaser.AUTO。这是你要给你的游戏使用的渲染环境（context）。推荐值是Phaser.AUTO，它将自动尝试使用WebGL，如果浏览器或设备不支持，它将回退为Canvas。Phaser生成的画布元素（canvas element）将径直添加到文档中调用脚本的那个节点上，不过也可以在游戏配置中指定一个父容器，如果你需要的话。
+
+属性width和height设定了Phaser即将生成的画布元素的尺寸，在此例中是800 x 600 像素。这是游戏显示所用的分辨率，而你的游戏世界（world）可以是任意尺寸。
+
+本教程后面还会涉及配置对象的scene属性的更多细节。

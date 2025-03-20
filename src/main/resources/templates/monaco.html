@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <link href="/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <title>Hello, Codeworld!</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/busy-load@0.1.2/dist/app.min.css" rel="stylesheet">
+        <script src="/diff.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js" integrity="sha512-lNjb0qWDVvt1zfSiXufaxtlFtenve3BLbvljxuMXuSr0DE0HYp5OhX0u89uwNd6MvlX1bgJ8ulfG4JMGurs8UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script th:attr="src='/editorApp.js?time='+${timestamp}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+
+        <!-- Javascripts -->
+        <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.js" integrity="sha512-Q54KM8pgGVaei1v6v/rbidhylhT8uSv1Vr/eL13GtbXEyVLSIt7PI6DN2gH0/lMBpGyQrFe6SHV25Vnvsodwtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+        <link rel="stylesheet" type="text/css" href="/monaco.css" />
+        <link rel="stylesheet" type="text/css" href="/chat.css" />
+        <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    </head>
+    <body style="height: 95vh; overflow: hidden"> 
+        <div>
+            <nav class="navbar navbar-expand-lg bg-dark justify-content-between" data-bs-theme="dark">
+                <a class="navbar-brand" href="/"><i class="bi bi-file-earmark-code-fill"></i>&nbsp;CODENOTE</a>
+                <div class="btn-group mr-1">
+                    <button type="button" class="btn btn-danger" onclick="app.saveCode();">
+                        Save
+                    </button>
+                    <button class="btn btn-success" id="previewButton" onclick="app.goPreview();"><i class="bi bi-caret-right-square-fill" style="font-size: 20px"></i></button>
+                    <button class="btn btn-warning mr-1" onclick="app.download();"><i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 20px"></i></button>
+                </div>
+            </nav>
+            <div class="input-group m-1 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Code</span>
+                </div>
+                <input type="text" class="form-control"  id="codeName" readonly value='Scene.js'>
+            </div>
+            <input type="hidden" id="code" name="code_content" value=''>
+            <input type="hidden" id="note" name="note_content" value=''>
+            <div class="split" style="width: 99vw">
+                <div id="plugins_panel" style="width: 30%; height: 100%">
+                    <ul class="nav nav-pills" id="tabs" role="tablist">
+
+                    </ul>
+                    <div class="tab-content" id="pluginsPaneContainer">
+
+                    </div>
+                </div>
+                <div class="split" style="width: 70%" id="code_panel">
+                    <div class="p-0" id="split-1" style="width: 48%; z-index: 1000;">
+                        <ul class="nav nav-tabs" id="codeUtilitiesTabs" role="tablist">
+                            <li class="active nav-item" role="tab">
+                                <button class="nav-link active" id="sideUtilityCodeTab" data-bs-toggle="tab" data-bs-target="#container" type="button" role="tab" aria-controls="container" aria-selected="true">Code</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="codeUtilitiesTabsContent">
+                            <div class="p-0 tab-pane active" id="container" role="tabpanel" style=" height: 580px; border: 0px solid #D5DBDB; width: 98%"></div>
+                        </div>
+                    </div>
+                    <div class="p-0" id="split-2" style="width: 48%; z-index: 1000;">
+                        <ul class="nav nav-tabs" id="sideUtilitiesTabs" role="tablist">
+                            <li class="active nav-item" role="tab">
+                                <button class="nav-link active" id="sideUtilityNoteTab" data-bs-toggle="tab" data-bs-target="#container2" type="button" role="tab" aria-controls="container2" aria-selected="true">Note</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="p-0 active tab-pane" id="container2" style=" height: 580px; border: 0px solid #D5DBDB; width: 98%">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var codeid = null; //"30b18dfa-5ec3-453e-bd33-3323e6064012";
+                    var projectid = [[${projectId}
+                    ]];//"01386f1f-23f2-4541-84d9-8130792cfce7";
+            var timestamp = [[${timestamp}
+            ]];
+            var project = [[${project}
+            ]];
+            var stuid = [[${stuid}
+            ]];
+        </script>
+        <script src="../../monaco/vs/loader.js"></script>
+        <script>
+            let app = new EditorApp();
+            app.init();
+        </script>   
+        <script>
+            let errorListeners=[];
+            let saveListeners=[];
+            let openedListeners=[];
+            function addErrorListener(f){
+                errorListeners.push(f);
+            }
+            function fireError(e){
+                for(let f of errorListeners){
+                    f(e);
+                }
+            }
+            function addOnSaveListener(fileName){
+                saveListeners.push(fileName);
+            }
+            function fireOnSave(fileName){
+                for(let f of saveListeners){
+                    f(fileName);
+                }
+            }
+            function addOnOpenedListener(f){
+                openedListeners.push(f);
+            }
+            function fireOnOpened(fileName){
+                for(let f of openedListeners){
+                    f(fileName);
+                }
+            }
+            window.addErrorListener=addErrorListener;
+            window.fireError=fireError;
+            window.addOnSaveListener=addOnSaveListener;
+            window.fireOnSave=fireOnSave;
+            window.addOnOpenedListener=addOnOpenedListener;
+            window.fireOnOpened=fireOnOpened;
+        </script>
+        <script type="module">
+            let plugins=[];
+            $.ajax("/api/plugins",{
+                        success: function(o){
+                            for(let plugin of o){
+                                plugins.push(plugin);
+                            }
+                            importModule();
+                        },
+                        error: function(){
+                            console.error('import failed');
+                        }
+            });
+            async function importModule() {
+                try {
+                   for(let plugin of plugins){
+//                       console.log(plugin);
+                       let pluginInstance=await import(plugin.url);
+                       app.loadPlugin(pluginInstance);
+                   }
+                   /*const explorer = await import('/plugins/explorer.js?timestamp='+new Date().getTime());
+                   const readings = await import('/plugins/readings.js?timestamp='+new Date().getTime());
+                   const ai_inspector = await import('/plugins/ai_inspector.js?timestamp='+new Date().getTime());
+                   const pair_programming = await import('/plugins/pair_programming.js?timestamp='+new Date().getTime());
+                   app.loadPlugin(explorer);
+                   app.loadPlugin(ai_inspector);
+                   app.loadPlugin(pair_programming);
+                   app.loadPlugin(readings);*/
+                } catch (error) {
+                   console.error('import failed');
+                }
+             }
+           
+        </script>
+    </body>
+</html>

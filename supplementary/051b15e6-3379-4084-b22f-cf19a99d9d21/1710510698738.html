@@ -1,0 +1,80 @@
+
+
+
+<title>Phaser遊戲程式教學</title>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+<script src="./Block.js"></script>
+
+
+
+<h1>Phaser遊戲程式教學 - 使用Phaser遊戲引擎制作遊戲</h1>
+
+<p>Phaser是一個使用JavaScript編寫的2D遊戲引擎，可以幫助開發人員快速制作精彩的網頁遊戲。在本教學中，我們將簡要介紹如何使用Phaser來制作一個遊戲。</p>
+
+<h2>步驟一：建立遊戲場景</h2>
+<p>首先，我們需要創建一個遊戲場景。在Phaser中，可以通過創建一個繼承自Phaser.Scene的類來實現。</p>
+
+```javascript
+class Scene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'game' });
+    }
+
+    preload() {
+        this.load.image('rocket', 'assets/rocket.png');
+        // 加載其他圖像和精靈表
+    }
+
+    create() {
+        // 初始化遊戲場景
+    }
+
+    update() {
+        // 更新場景中的元素
+    }
+}
+```
+
+<h2>步驟二：加入遊戲元素</h2>
+<p>在遊戲中，我們會加入一些遊戲元素，例如主角、敵人、子彈等。這些元素可以通過Phaser的物理系統進行管理。</p>
+
+```javascript
+class Rocket extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'rocket');
+        scene.add.existing(this);
+    }
+
+    update() {
+        // 碰撞檢測和更新位置
+    }
+}
+
+class Enemy extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'enemy');
+        scene.add.existing(this);
+        scene.enemies.add(this);
+    }
+
+    update() {
+        // 敵人的移動和行為
+    }
+}
+```
+
+<h2>步驟三：處理碰撞事件</h2>
+<p>在遊戲中，碰撞事件是非常重要的。可以通過Phaser提供的overlap()方法來處理元素之間的碰撞事件。</p>
+
+```javascript
+this.physics.add.overlap(this.rocket, this.enemies, function(rocket, enemy) {
+    rocket.disableBody(true, true);
+    enemy.disableBody(true, true);
+});
+```
+
+<h2>總結</h2>
+<p>通過這個簡單的教學，你可以快速上手使用Phaser遊戲引擎來制作遊戲。記得探索更多關於Phaser的API和功能，這將有助於提升你的遊戲開發技能。</p>
+
+
+

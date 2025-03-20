@@ -1,0 +1,18 @@
+Moving the player
+When the input is active we’ll increase the X position of the player:
+
+  // check for active input
+  if (this.input.activePointer.isDown) {
+    // player walks
+    this.player.x += this.playerSpeed;
+  }
+this.playerSpeed is a parameter we haven’t declared yet. The place to do it will be the init method, which is called before the preload method. Add the following before the preload definition (the actual declaration order doesn’t matter, but it will make our code more clear). We are adding other parameters as well which we’ll use later:
+
+// some parameters for our scene (our own customer variables - these are NOT part of the Phaser API)
+gameScene.init = function() {
+  this.playerSpeed = 1.5;
+  this.enemyMaxY = 280;
+  this.enemyMinY = 80;
+}
+Now we can control our player and move it all the way to the end of the visible area!
+

@@ -1,0 +1,169 @@
+底下這段程式碼多了一個 }，請幫我找出來在哪裏，只要告訴我行號跟該行前後的程式碼片段就好
+class Scene extends Phaser.Scene {
+  constructor(){
+    super();
+    this.lastFireTime = nll;
+    this.lastBigFireTime = new Date().getTime();
+  }
+
+  preload(){
+    this.load.spritesheet(
+      "rocket",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/spaceship_spritesheet.png?v=1699367781393",
+      {
+        frameWidth: 50,
+        frameHeight: 50
+      }
+    );
+    this.load.image(
+      "enemy",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/enemy.png?v=1699367630466"
+    );
+    //敵人的動畫 -1
+    this.load.spritesheet(
+      "enemy2",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/spritesheet.png?v=1699367693086",
+      {
+        frameWidth: 32,
+        frameHeight: 27
+      }}
+    );
+    //////////////////
+    this.load.image(
+      "bullet",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/flame.png?v=1699367739459"
+    );
+    this.load.image(
+      "block",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/block.png?v=1699367459981"
+    );
+    this.load.image(
+      "bomb",
+      "https://cdn.glitch.global/de902603-a667-4208-8ddb-31090ae1b402/bomb.png?v=1699367586681"
+    );
+  }
+
+  /*********************************************************************************************************************** */
+  create() {
+    this.rocket = new Rocket(this, 400, 580);
+    //敵人的動畫 -2
+    this.anims.create({
+      key: "run",
+      frames: [
+        { key: "enemy2", frame: 0 },
+        { key: "enemy2", frame: 1 }
+      ],
+      frameRate: 1
+    });
+    /////////////////////////////////
+
+    this.anims.create({
+      key: "rocket_glow",
+      frames: [
+        { key: "rocket", frame: 0 },
+        { key: "rocket", frame: 1 }
+      ],
+      frameRate: 5
+    });
+
+    this.anims.create({
+      key: "rocket_normal",
+      frames: [{ key: "rocket", frame: 0 }],
+      frameRate: 1
+    });
+
+    this.enemies = this.physics.add.group();
+    this.bullets = this.physics.add.group();
+    this.bombs = this.physics.add.group();
+
+    for (let y = 30; y <= 200; y += 30) {
+      for (let x = 100; x <= 700; x += 40) {
+        let enemy = new Enemy(this, x, y, x - 70, x + 100);
+        this.enemies.add(enemy);
+      }
+    }
+    this.physics.add.overlap(this.bullets, this.enemies, function (o1, o2) {
+      o1.disableBody(true, true);
+      o2.disableBody(true, true);
+    });
+    this.physics.add.overlap(this.rocket, this.bombs, function (o1, o2) {
+      o1.disableBody(true, true);
+      o2.disableBody(true, true);
+    });
+    this.physics.add.overlap(this.bullets, this.bombs, function (o1, o2) {
+      o1.disableBody(true, true);
+      o2.disableBody(true, true);
+    });
+
+    this.blocks = this.physics.add.staticGroup();
+    for (let y = 450; y <= 530; y += 10) {
+      for (let x = 50; x <= 750; x += 10) {
+        if (Math.random() > 0.9) {
+          let block = new Block(this, x, y);
+          this.blocks.add(block);
+        }
+      }
+    }
+
+    this.physics.add.overlap(this.blocks, this.bullets, function (o1, o2) {
+      o1.disableBody(true, true);
+      o2.disableBody(true, true);
+    });
+
+    this.physics.add.overlap(this.blocks, this.bombs, function (o1, o2) {
+      o1.disableBody(true, true);
+      o2.disableBody(true, true);
+    });
+
+    this.physics.add.overlap(this.blocks, this.enemies, function (o1, o2) {
+      o1.disableBody(true, true);
+    });
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  /*********************************************************************************************************************** */
+  update() {
+    let now = new Date().getTime();
+    if (this.cursors.left.isDown) {
+      this.rocket.setVelocityX(-160);
+    } else if (this.cursors.right.isDown) {
+      this.rocket.setVelocityX(160);
+    } else {
+      this.rocket.setVelocityX(0);
+    }
+    if (now - this.lastBigFireTime > 5000) {
+      this.rocket.anims.play("rocket_glow", true);
+    } else {
+      this.rocket.anims.play("rocket_normal", true);
+    }
+    if (this.cursors.space.isDown && this.rocket.body.enable) {
+      if (now - this.lastBigFireTime > 5000) {
+        for (let i = 0; i < 30; i++) {
+          let bullet = new Bullet(this, 800 * Math.random(), 350);
+          this.bullets.add(bullet);
+          bullet.setVelocityY(-100);
+        }
+        this.lastBigFireTime = now;
+      } else if (this.lastFireTime == null || now - this.lastFireTime > 500) {
+        let bullet = new Bullet(this, this.rocket.x, this.rocket.y);
+        this.bullets.add(bullet);
+        bullet.setVelocityY(-100);
+        this.lastFireTime = now;
+      }
+    }
+    this.enemies.children.iterate(function (enemy) {
+      if (enemy.y >= 590) {
+        //game over
+        this.rocket.disableBody(true, true);
+      }
+      enemy.update();
+    });
+
+    this.bullets.children.iterate(function (bullet) {
+      if (bullet.y <= 0) {
+        bullet.disableBody(true, true);
+      }
+    });
+  }
+}

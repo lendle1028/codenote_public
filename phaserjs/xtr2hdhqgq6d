@@ -1,0 +1,65 @@
+现在该添加一些坏蛋，以此给我们的游戏收尾。这将给游戏增添很棒的挑战因素，这是此前缺乏的。
+
+想法是这样的：你第一次收集到所有星星后，将放出一个跳跳弹。这个炸弹只是随机地在平台上各处跳，如果收集它，你就死了。所有星星会重新产出，以便你可以再次收集，如果你完成了，又会放出另一个炸弹。这将给玩家一个挑战：别死掉，取得尽可能高的分数。
+
+我们首先需要的东西是给炸弹用的一个组，还有几个碰撞器：
+
+bombs = this.physics.add.group();
+
+this.physics.add.collider(bombs, platforms);
+
+this.physics.add.collider(player, bombs, hitBomb, null, this);
+炸弹当然会跳出平台，如果玩家碰到它们，我们将调用hitBomb函数。这个函数所作的就是停止游戏，使玩家变成红色：
+
+function hitBomb (player, bomb)
+{
+    this.physics.pause();
+
+    player.setTint(0xff0000);
+
+    player.anims.play('turn');
+
+    gameOver = true;
+}
+现在看来还不错，不过我们要放出一个炸弹。要做到这一点，我们改一下collectStar函数：
+
+function collectStar (player, star)
+{
+    star.disableBody(true, true);
+
+    score += 10;
+    scoreText.setText('Score: ' + score);
+
+    if (stars.countActive(true) === 0)
+    {
+        stars.children.iterate(function (child) {
+
+            child.enableBody(true, child.x, 0, true, true);
+
+        });
+
+        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+        var bomb = bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
+    }
+}
+我们使用一个组的方法countActive，看看有多少星星还活着。如果没有了，那么玩家把它们收集完了，于是我们使用迭代函数重新激活所有星星，重置它们的y位置为0。这将使所有星星再次从画面顶部落下。
+
+下一部分代码生成一个炸弹。首先，我们取一个随机x坐标给它，始终在玩家的对侧画面，以便给玩家个机会。然后生成炸弹，设置它跟世界碰撞，反弹，拥有随机速度。
+
+最终结果是个很棒的小炸弹精灵，它在画面上跳呀跳。尺寸小，开始的时候易于躲避。不过数量增加后就变得比较棘手！
+
+image
+
+我们的游戏已经做好了:)
+
+结论
+现在你已经学会怎样生成有物理属性的精灵，学会控制它的动作，学会使它与其他对象在一个小小的游戏世界里互动。你还可以做很多事情，以便增强它。为什么不扩展平台的尺寸并允许镜头摇动呢？也许可以增加不同类型的坏蛋，不同分值的收集活动，或者给玩家一个血条（health bar）。
+
+或者，为了做个非暴力型的，你可以把它做成比快游戏（speed-run），仅仅挑战人们去尽可能快地收集星星。
+
+有了本教程中所学到的东西，还有你能得到几百个实例的帮助，你现在已经为将来的项目准备了牢靠的基础。不过你总还会有疑问，需要建议，或者想分享你一直在做的东西，到时候请随意到Phaser论坛请求帮助。

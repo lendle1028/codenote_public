@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <link href="bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <title>Hello, Codeworld!</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+
+        <!-- Javascripts -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.js" integrity="sha512-Q54KM8pgGVaei1v6v/rbidhylhT8uSv1Vr/eL13GtbXEyVLSIt7PI6DN2gH0/lMBpGyQrFe6SHV25Vnvsodwtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            .d2h-files-diff{
+                flex-direction: column !important;
+            }
+            .d2h-file-side-diff{
+                width: 100% !important;
+            }
+            .d2h-file-header{
+                display: none
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width: 90vw; overflow: auto" id="messages">
+            
+        </div>
+        <textarea id="message" style="width: 80vw"></textarea><br/><button onclick="send();" id="sendBt">Send</button>
+       
+        <script>
+            function send(){
+                $("#sendBt").attr("disabled", "disabled");
+                $.ajax("/api/test/chatCodeDiff", {
+                    type: "post",
+                    data: $("#message").val(),
+                    contentType: "application/json;charset=utf-8",
+                    success: function(d){
+//                        console.log(d.message);
+                        d=JSON.parse(d.message);
+//                        console.log(d);
+                        $("#sendBt").removeAttr("disabled");
+                        for(let i=0; i<d.length; i++){
+                            let oldCode=d[i].oldCode;
+                            let newCode=d[i].newCode;
+                            let diff=Diff.createPatch(d[i].file, oldCode, newCode);
+                            let cell=document.createElement("div");
+                            $(cell).html(`
+                                <b class="fileName_holder"></b><br/>
+                                <div class="suggesion_holder"></div><br/>
+                                <div class="diff_holder"></div>
+                             `);
+                            $(cell).find(".fileName_holder").text(d[i].file);
+                            $(cell).find(".suggesion_holder").text(d[i].suggest);
+                            $("#messages").append(cell);
+                            const targetElement = $(cell).find(".diff_holder").get(0);
+                            var configuration = {
+                                    drawFileList: false,
+                                    fileListToggle: false,
+                                    fileListStartVisible: false,
+                                    fileContentToggle: false,
+                                    matching: 'lines',
+                                    outputFormat: 'side-by-side',
+                                    synchronisedScroll: true,
+                                    highlight: true,
+                                    renderNothingWhenEmpty: false,
+                                  };
+                            const diff2htmlUi = new Diff2HtmlUI(targetElement, diff, configuration);
+                            diff2htmlUi.draw();
+                            diff2htmlUi.highlightCode();
+                            $($(targetElement).find(".d2h-file-side-diff").get(0)).css("display", "none");
+//                            $("#messages").append(targetElement);
+                        }
+                        
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+让我们加载游戏所需资源。要做到这一点，你要在场景中的一个叫preload（预加载）的函数内部，调用Phaser的Loader（加载器）。Phaser启动时会自动找到这个函数，并加载里面定义好的所有资源。
+
+目前preload函数是空的。把它改为：
+
+function preload ()
+{
+    this.load.image('sky', 'assets/sky.png');
+    this.load.image('ground', 'assets/platform.png');
+    this.load.image('star', 'assets/star.png');
+    this.load.image('bomb', 'assets/bomb.png');
+    this.load.spritesheet('dude',
+        'assets/dude.png',
+        { frameWidth: 32, frameHeight: 48 }
+    );
+}
+这样将加载5个资源：4张图（image）和一个精灵表单（sprite sheet）。也许对于某些人，它看起来够明白了，但我还想说说第一个参数，它叫资源的key（键值，即'sky'，'bomb'）。这个字符串是一个链接，指向已加载的资源，你在代码中生成游戏对象时将用到它。你可以随意使用任何有效的JavaScript字符串作为键值。
+
+显示图像
+要显示已经加载的一张图像，我们把下面的代码到create（生成）函数中：
+
+this.add.image(400, 300, 'sky');
+
+你可以在part3.html中看到这行代码。如果你是在浏览器中加载的，你现在应该看到一个游戏画面，布满蓝色天空作为背景：
+
+image
+
+400和300是图像坐标的x值和y值。为什么是400和300呢？这是因为，在Phaser 3 中，所有游戏对象的定位都默认基于它们的中心点。这个背景图像的尺寸是800 x 600像素，所以，如果我们显示它时将它的中心定在0 x 0，你将只能看到它的右下角。如果我们显示它时定位在400 x 300，你能看到整体。
+
+提示：你可以用setOrigin（设置原点）来改变这种情况。比如代码this.add.image(0, 0, 'sky').setOrigin(0, 0)，将把图像的绘制定位点重置为左上角。在Phaser 2 中，定位点是通过属性anchor（锚点）获取的，但在Phaser 3 中则通过属性originX和originY。
+
+游戏对象的显示顺序与你生成它们的顺序一致。所以，如果你想放一个星星的精灵在背景上，你就要保证在添加天空（sky）图像之后才添加星星（star）图像：
+
+function create ()
+{
+    this.add.image(400, 300, 'sky');
+    this.add.image(400, 300, 'star');
+}
+如果你先放star（星星）图像，它将被sky(天空)图像盖住。

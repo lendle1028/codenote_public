@@ -1,0 +1,27 @@
+最后我们打算给游戏增加两处改进：一个需要躲避的敌人，它会杀死玩家；收集到星星时得分。首先是得分。
+
+为了做这个，我们将使用游戏对象Text（文本）。在此我们生成两个新的变量，一个持有实际得分，一个文本对象本身：
+
+var score = 0;
+var scoreText;
+scoreText在create函数中构建：
+
+scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+16 x 16是显示文本的坐标位置。'score: 0'是要显示的默认字符串，接下来的对象包含字号、填充色。因为没有指定字体，实际上将用Phaser默认的，即Courier。
+
+下一步我们要调整collectStar函数，以便玩家捡到一颗星星时分数会提高，文本会更新以反映出新状态：
+
+function collectStar (player, star)
+{
+    star.disableBody(true, true);
+
+    score += 10;
+    scoreText.setText('Score: ' + score);
+}
+这样一来，每颗星星加10分，scoreText将更新，显示出新的总分。如果运行part9.html，你可以看到星星掉下来，收集星星时分数会提高。
+
+image
+
+最后一节我们将添几个坏蛋。
+

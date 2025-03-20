@@ -1,0 +1,44 @@
+Under the hood this.add.image is creating a new Image Game Object and adding it to the current Scenes display list. This list is where all of your Game Objects live. You could position the image anywhere and Phaser will not mind. Of course, if it's outside of the region 0x0 to 800x600 then you're not going to visually see it, because it'll be "off screen", but it will still exist within the Scene.
+
+The Scene itself has no fixed size and extends infinitely in all directions. The Camera system controls your view into the Scene and you can move and zoom the active camera as required. You can also create new cameras for other views into the Scene. This topic is beyond the scope of this specific tutorial, suffice to say the camera system in Phaser 3 is significantly more powerful than in v2. Things that were literally not possible before now are.
+
+For now let's build up the Scene by adding a background image and some platforms. Here is the updated create function:
+
+var platforms;
+
+function create ()
+{
+    this.add.image(400, 300, 'sky');
+
+    platforms = this.physics.add.staticGroup();
+
+    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
+    platforms.create(600, 400, 'ground');
+    platforms.create(50, 250, 'ground');
+    platforms.create(750, 220, 'ground');
+}
+Glancing quickly at the code you'll see a call to this.physics. This means we're using the Arcade Physics system, but before we can do that we need to add it to our Game Config to tell Phaser our game requires it. So let's update that to include physics support. Here is the revised game config:
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+The new addition is the physics property. With this code in place if you run it, which you'll find as part4.html in the tutorial zip file, you should see a much more game-like scene:
+
+image
+
+We've got a backdrop and some platforms, but how exactly are those platforms working?

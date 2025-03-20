@@ -1,0 +1,20 @@
+Coordinates
+The origin (0,0) in Phaser is the top left corner of the screen. The x axis is positive to the right, and y axis is positive downwards:
+
+X-Y Coordinate system with 0,0 and 10,6 as points 
+
+Sprites by default have their origin point in the center, box on x and y. This is an important difference with Phaser 2, where sprites had what was called an anchor point on the top-left corner.
+
+This means, when we positioned our background on (0,0), we actually told Phaser: place the center of the sprite at (0,0). Hence, the result we obtained.
+
+To place the top-left corner of our sprite on the top-left corner of the screen we can change the origin of the sprite, to be it’s top-left corner:
+
+// executed once, after assets were loaded
+gameScene.create = function() {
+  // background
+  let bg = this.add.sprite(0, 0, 'background');
+  // change origin to the top-left of the sprite
+  bg.setOrigin(0,0);
+};
+The background will now render in the position we want it to be:
+

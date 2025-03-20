@@ -1,0 +1,21 @@
+Colliding with enemies
+We’ll implement this using the same approach we took for the treasure chest. The collision check will be performed for each enemy. It makes sense to utilize the same for loop we’ve already created:
+
+  // enemy movement and collision
+  let enemies = this.enemies.getChildren();
+  let numEnemies = enemies.length;
+  for (let i = 0; i < numEnemies; i++) {
+    // move enemies
+    enemies[i].y += enemies[i].speed;
+    // reverse movement if reached the edges
+    if (enemies[i].y >= this.enemyMaxY && enemies[i].speed > 0) {
+      enemies[i].speed *= -1;
+    } else if (enemies[i].y <= this.enemyMinY && enemies[i].speed < 0) {
+      enemies[i].speed *= -1;
+    }
+    // enemy collision
+    if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemies[i].getBounds())) {
+      this.gameOver();
+      break;
+    }
+  }

@@ -1,0 +1,44 @@
+在底层，代码this.add.image生成一个新的Image（图形）类游戏对象，并把它添加到当前场景的显示列表（display list）中。你的所有游戏对象都活在这个列表中。你可以把图像放置在任何位置，Phaser不会介意。当然，如果图像位于0x0到800x600这个区域之外，那么你视觉上看不到它，因为它已“脱离画面”，但它仍旧在场景中存在。
+
+场景（Scene）自身没有确定的尺寸，在所有方向上都是无限延展的。镜头（Camera）系统控制着你观看场景的视野，你可以随意移动、推拉已激活的镜头。你还可以另外生成一些镜头，用于别的观看场景的视野。这一话题已经超出本特定教程，完全可以说，Phaser 3 的镜头系统，能力大大地超过Phaser 2的。以前完全不可能的东西现在可以了。
+
+现在让我们搭建场景，添加一张背景图像和几个平台。这是更新后的create函数：
+
+var platforms;
+
+function create ()
+{
+    this.add.image(400, 300, 'sky');
+
+    platforms = this.physics.add.staticGroup();
+
+    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
+    platforms.create(600, 400, 'ground');
+    platforms.create(50, 250, 'ground');
+    platforms.create(750, 220, 'ground');
+}
+快速扫一眼这些代码，你可以看到一个对this.physics的调用。这意味着我们在使用Arcade（游乐场）物理系统（Physics system），不过在此之前我们还需要把它添加到游戏配置中，以便告诉Phaser我们的游戏需要它。所以让我们更新一下，引入对物理系统的支持。这是修订后的游戏配置：
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+新加的是physics属性。这些代码就位之后，如果运行它（你可以在本教程的zip文件中part4.html中找到），你将看到一个更有游戏样子的场景：
+
+image
+
+我们有了一个背景和一些平台，可以这些平台到底怎么样才能运作起来呢？

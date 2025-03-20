@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "api-project-437674419610",
+  "private_key_id": "36be64919691520780bca031e5b59183582fd5d6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCExeWt7grof66U\nXPy9/5JS7yXSW+Ll98CORV/Lu/s3NW67NP0nqPPzv37N1LzDldDa0C8UeyE3b7lk\nM+hoAwm17S+ncR1eCpv5DbpVhUTDEa8YuzzEDa8FJcYHfLwG0VZ3ztG+0WttOQD5\nKqh6ByEmPle7EbxW0RY4C1DXtb/o5HDFuLXPRJZp3RWLJj0Hxhs68NGEp8XdEL+G\nqK8e3vXb2LbrqFxL8Wg247VGydMwlJTv6/RACcsoebyzJgNie7k3RVX0CmzaAgyX\neP05fA8tUJr8AdR8y8pF/BR+pq+X5qkFgOdWEaYjYQnDvWk81dOU1NdY5XcaJAVQ\nUVByLVpFAgMBAAECggEAPj2O98P5NRh1vHMCwAaIj3wwHLaaXPeROqBm0djjYPQZ\nXoTuj6LyCTeht9ecTYtzhr/E8jLuVVB4dfKnZerWqIPxrOqnu6f5ifzXdrOskk09\n6bgMOlO30g/tDyF3+zIy+KLpTCxb0a3BOQy4QcwJzCW5dqZPxdrqMYeMdDJtLj0L\njRkw/GvQs2FsS5pTXjUz8UWvOnjyCrmoPLltCjIdPZiiwA92hP/jjm46/SdEDaJQ\nIBP1+djsnf6Hgn79yuRuI3Lffl8LXYDLSImEN1TlbbKaX21VWNixWLAgCCGWMTzi\nxRDP1Nv83kd6XEs1wbR9Xf8acRnpZ11S1DV3yDNXmQKBgQC5yFKhrb5/Tv/gsm7d\nNs1uPJnx9LNytJjJ1S6iA8l8EGK0oWViYqAXR4fH7+Cdu9ih/QhEFxJ35M0Ysnj1\n/8X4Sz5ti68HgFktWz8TPu/0uGzpDSdn1KMN4GWea2IJQQgjufR0DkYjWrvacDDU\nhar6FL80vXDeH88jl34SXu7HjwKBgQC29I9O/zxrRdf1oB1klAVGEBujv4zCuGDe\nsQvX+qSfAuzQozQ9L740VY3g8gg2obpq9FJp7s/5VEfI4AHcbE636Cs229yW9YgR\nTeKUfm3uq9GlSJmOOEhh254nnI/5uh7VRg1vN39eO+KGigyWvbcDz2ikji/MP0ml\nw1r3kNw26wKBgEUQRj+aYkXbbV3vly0fUVEYsDX1PLx4jJADcxmBhOZdBQSXNyRS\n+6aLzdsyvnKEwWy+rtL5LMFrSh9TQYpZshOyjRuWINQOD5i/4fvamsODx+D/JdYA\ngzkGYWB6FPDRvx/g4hI+uC4ubcUvjceDhWMAUXBeuFWqx4s4pwJXTjbbAoGAOwdz\nCYDuZIoXYKe1dBMSFIXz9QRDjTvh/VfQQ3IaFTfjYnmVzDwQOWB1M2PD5KSPuhx0\nTrt/nKlls9kaoJzNVSbycnPDm21C5ppjhZe5Lm1/ab2f1bQxHmm2gH9SMLetZRCC\nGyUj0iquLsxxvV0epHsR/y3lHBg7UeFTA1dYxdsCgYEAn2EZMhbXBSPcaS/vTa+Z\nP55MZg6kY6j2dkCr4nfJ7j+YgZm5OF8p0qd0PsOXClLOXujKmhiLnitK3YAno5ww\nvt/lZrOMx46CImVo+t50OZV7jguo6HXHOkxsVZCHlAy+5Y/nn9r4mGkS4NhyoIJs\nZH4hx1Resz7uDp5ftS5YDjM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "codenote-semantic-retrieval@api-project-437674419610.iam.gserviceaccount.com",
+  "client_id": "116689851494582817757",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/codenote-semantic-retrieval%40api-project-437674419610.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,41 @@
+碰撞很棒了，不过我们非常想玩家动起来。你可能想到了，去找文档，搜一搜怎样添加事件监听器，但这里不需要。Phaser有内置的键盘管理器，用它的一个好处体现在这样一个方便的小函数：
+
+cursors = this.input.keyboard.createCursorKeys();
+
+这里把四个属性up, down, left, right（都是Key对象的实例），植入光标（cursor）对象。然后我们要做的就是在update循环中做这样一些轮询：
+
+if (cursors.left.isDown)
+{
+    player.setVelocityX(-160);
+
+    player.anims.play('left', true);
+}
+else if (cursors.right.isDown)
+{
+    player.setVelocityX(160);
+
+    player.anims.play('right', true);
+}
+else
+{
+    player.setVelocityX(0);
+
+    player.anims.play('turn');
+}
+
+if (cursors.up.isDown && player.body.touching.down)
+{
+    player.setVelocityY(-330);
+}
+我们添加了很多代码，不过都还相当易读。
+
+它做的第一件事，是查看方向左键是不是正被按下。如果是，我们应用一个负的水平速度，开动奔跑动画'left'。如果是方向右键正被按下，我们按字面意思做反向动作。通过清除速度值，再如此设置，一帧一帧，形成一个“走走停停”（stop-start）式的运动。
+
+玩家精灵只有键被按下时才移动，抬起时立即停止。Phaser也允许你用动量（momentum）和加速度（acceleration）生成更为复杂的动作，不过这里已经得到我们的游戏所需要的效果了。键盘检测的最后部分，如果没有键被按下，就设置动画为'turn'，水平速度为0。
+
+赶快
+代码的最后部分添加了跳起功能。方向up键是跳起键，我们检查它有没有被按下。不过我们同时也检测玩家是不是正与地面接触，否则在半空中还会往上跳。
+
+如果所有这些条件都符合，我们应用一个垂直速度，330像素每秒。玩家会自动落回地面，因为有重力。控制已经就位，我们现在有了一个可以探索的游戏世界。请加载part7.html，玩一玩。尝试调整各个值，比如跳起值330，调低，调高，看看会有什么效果。
+
+image

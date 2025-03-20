@@ -1,0 +1,24 @@
+Bring in the sprites!
+Let’s dive right into it and show our first sprite, the game background, on the screen. The assets for this tutorial can be downloaded here. Place the images in a folder named “assets”. The following code goes after let gameScene = new Phaser.Scene(‘Game’); :
+
+// load asset files for our game
+gameScene.preload = function() {
+  // load images
+  this.load.image('background', 'assets/background.png');
+};
+// executed once, after assets were loaded
+gameScene.create = function() {
+   // background
+   this.add.sprite(0, 0, 'background');
+}
+Our game background image “background.png” is loaded. We are giving this asset the label “background”. This is an arbitrary value, you could call it anything you want.
+When all images are loaded, a sprite is created. The sprite is placed in x = 0, y = 0. The asset used by this sprite is that with label “background”.
+Let’s see the result:
+
+Phaser 3 game with newly placed background
+
+Not quite what we wanted right? After all, the full background image looks like so:
+
+Phaser 3 game with scale applied for full-screen background
+
+Before solving this issue let’s first go over how coordinates are set in Phaser.

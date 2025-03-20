@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <link href="../../bootstrap.min.css" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <title>Hello, Codeworld!</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><i class="bi bi-file-earmark-code-fill"></i>&nbsp;CODENOTE</a>
+            </div>
+        </nav>
+        <div>
+            <div class="m-3 row justify-content-center" id="app">
+                <div style='width: 90vw'>
+                    <div class="m-1 mb-2">
+                        <select class="form-select" aria-label="Select Project Name" v-model="selectedProject">
+                            <option v-for="n in projectNames" v-bind:value="n">{{n}}</option>
+                          </select><br/>
+                        <button class="btn btn-success" onclick="add();"><i class="bi bi-plus-circle-fill" style="font-size: 20px"></i></button><br/>
+                    </div>
+                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="t in parameters">
+                                <td>{{t.id}}</td>
+                                <td>
+                                    <button class="btn btn-info" v-on:click='view(t);' title="Go"><i class="bi bi-play-fill" style="font-size: 20px"></i></button>
+                                    <button class="btn btn-primary" v-on:click='edit(t);'><i class="bi bi-pencil-square" style="font-size: 20px"></i></button>
+                                    <button class="btn btn-danger" v-on:click='remove(t);'><i class="bi bi-trash3" style="font-size: 20px"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+                <div class="modal" tabindex="-1" id="modal">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Personality Assessment Results</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Author</th>
+                                    <th>CO</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="t in predictionResults">
+                                    <td>{{t.author}}</td>
+                                    <td>{{t.levelCo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                <script>
+                    let app=new Vue({
+                        el: "#app",
+                        data:{
+                            parameters: [],
+                            projectNames: [],
+                            selectedProject: "",
+                            predictionResults: []
+                        },
+                        methods:{
+                            edit: function(t){
+                                window.location.href="/personalityPrediction/conf/id/"+t.id;
+                            },
+                            remove: function(t){
+                                $.ajax("/api/personalityPrediction/conf/id/"+t.id, {
+                                    type: 'DELETE',
+                                    success: function(){
+                                        window.location.reload();
+                                    },
+                                    error: function(){
+                                        window.location.reload();
+                                    }
+                                });
+                            },
+                            view: function(t){
+                                $.ajax("/getPrediction/profileName/"+t.id+"/projectName/"+app.selectedProject, {
+                                    success: function(d){
+                                        app.predictionResults=d;
+                                        var modal = new bootstrap.Modal(document.getElementById('modal'), {
+                                            keyboard: false
+                                          });
+
+
+                                          modal.show();
+                                    }
+                                });
+//                                window.open("/tutor/id/"+t.id+"/assistant", "_blank");
+                            }
+                        }
+                    });
+                    $.ajax("/api/personalityPrediction/conf/list", {
+                        success: function(d){
+                            app.parameters=d;
+                        }
+                    });
+                    
+                    $.ajax("/api/sampleProjectBean", {
+                        success: function(d){
+                            for(let p of d){
+                                app.projectNames.push(p.projectname_ex);
+                            }
+                            app.selectedProject=d[0].projectname_ex;
+                        }
+                    });
+                    function add(){
+                        window.location.href="/personalityPrediction/conf/new";
+                    }
+                </script>
+            </div>
+        </div>
+    </body>
+</html>
