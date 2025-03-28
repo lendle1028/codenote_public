@@ -32,7 +32,11 @@ Codenote is a web-based application with backend and frontend modules:
 - Access personalized learning materials
 - Participate in pair programming sessions
 - Utilize AI-powered debugging assistance
-
+## Build
+- Install Java 17 and Maven
+- Install MySQL
+- Refer to application.properties for the database connection information
+- Run `mvn clean package` to build the project
 ## Installation and Setup
 1. Unzip the provided package.
 2. Add your OpenRouter keys and Google API keys to `application.properties`.
